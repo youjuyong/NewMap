@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { color } from "./var";
+
 export const Root_Css = StyleSheet.create({
    defaultSize : {
         height : "100%",
@@ -43,15 +44,11 @@ export const Section = StyleSheet.create({
         position : 'relative',
         textAlign : 'center',
         flexDirection : 'row',
-         borderWidth : 3,
-        borderColor : color.black,
     },
     
     mainBoxInner : {
         textAlign : 'center',
         width : 380,
-        borderWidth : 3,
-        borderColor : color.black,
         alignItems : 'center',
         position : 'relative',
         flexDirection : 'row',
@@ -69,12 +66,21 @@ export const Section = StyleSheet.create({
         marginRight : 0,
         marginLeft : 10,
         marginTop : 10,
-        borderWidth : 3,
-        borderColor : color.black,
-        backgroundColor : color.blue700
+        backgroundColor : color.blue700,
+        borderRadius : 10
     },
 
     mainBoxText : {
-        
+          textAlign : 'center',
+          color : color.white200,
+          fontSize :20,
+          fontWeight : 700,
+          marginTop : 10,
+          fontFamily: 'Pretendard-Regular'
+    },
+
+    mainBoxLocImg : {
+        marginLeft : "30%",
+        marginTop : 15
     }
 });
