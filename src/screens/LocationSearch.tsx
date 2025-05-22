@@ -1,49 +1,48 @@
-import { Text, View, StyleSheet } from "react-native";
-import { WebView } from 'react-native-webView';
+import { Text, View, StyleSheet, Alert } from "react-native";
+import { useState, useEffect } from "react";
+import * as Location  from 'expo-location';
+import KakaoMap from "../component/KakaoMap";
 
-  const kakaoMapHtml = `
-    <!DOCTYPE html>
-    <html lang="ko">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Kakao Map</title>
-      <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=JS_APP_KEY"></script>
-      <style>
-        html, body, #map { margin: 0; padding: 0; width: 100%; height: 100%; }
-      </style>
-    </head>
-    <body>
-      <div id="map"></div>
-      <script>
-        kakao.maps.load(function() {
-          var container = document.getElementById('map');
-          var options = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3
-          };
-          var map = new kakao.maps.Map(container, options);
-        });
-      </script>
-    </body>
-    </html>
-  `;
-  
 const LocationSearch = ({ route, navigation } : any) => {
+
+    const [location, setLocation] = useState<{ latitude : number, longitude : number} | null>(null);
+
+    const getCurrentLocation = async () => {
+      const { granted } = await Location.requestForegroundPermissionsAsync();
+    
+      if ( !granted ) {
+        return;
+      } else {
+
+        try {
+                const { coords } = await Location.getCurrentPositionAsync({accuracy: 5});
+                setLocation({latitude: coords.latitude, longitude: coords.longitude});
+            } catch (error) {
+                console.error('위치 정보를 가져오는 데 실패했습니다:', error)
+            }
+      }
+    };
+
+    useEffect(() => {
+        getCurrentLocation();
+    },[]);
+    
     return (
       <View style={styles.container}>
-      <WebView
-        originWhitelist={['*']}
-        source={{ html: kakaoMapHtml }}
-        style={{ flex: 1 }}
-      />
-    </View>
+             {location ? (
+                <KakaoMap latitude={location.latitude} longitude={location.longitude} />
+              ) : (
+                  <Text>위치를 가져오는 중입니다...</Text>
+            )}
+      </View>
     )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height : 100,
+    position : 'relative'
   },
 });
 
