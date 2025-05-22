@@ -1,18 +1,22 @@
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import * as Location  from 'expo-location';
 import KakaoMap from "../component/KakaoMap";
+import { Section } from "../../public/styles";
 
 const LocationSearch = ({ route, navigation } : any) => {
 
     const [location, setLocation] = useState<{ latitude : number, longitude : number} | null>(null);
 
-    const getCurrentLocation = async () => {
+    const getCurrentLocation = async (element ?: any) => {
       const { granted } = await Location.requestForegroundPermissionsAsync();
     
-      if ( !granted ) {
+      if ( !granted ) 
+      {
         return;
-      } else {
+      } 
+      else 
+      {
 
         try {
                 const { coords } = await Location.getCurrentPositionAsync({accuracy: 5});
@@ -34,6 +38,7 @@ const LocationSearch = ({ route, navigation } : any) => {
               ) : (
                   <Text>위치를 가져오는 중입니다...</Text>
             )}
+             <TouchableOpacity  style={Section.current_loc} onPress = {(element) => getCurrentLocation(element)}><Text>새로고침</Text></TouchableOpacity>
       </View>
     )
 }

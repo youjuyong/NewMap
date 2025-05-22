@@ -82,5 +82,10 @@ export const Section = StyleSheet.create({
     mainBoxLocImg : {
         marginLeft : "30%",
         marginTop : 15
+    },
+
+    current_loc : {
+        width : 120,
+        height : 100
     }
 });

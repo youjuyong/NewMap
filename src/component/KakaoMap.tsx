@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { Text, View, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import { WebView } from 'react-native-webview';
 import * as Location  from 'expo-location';
@@ -6,8 +6,10 @@ import * as Location  from 'expo-location';
  
   
 const KakaoMap = ({ latitude, longitude } : any) => {
-  const [test, setTest] = useState(null);
-     const kakaoMapHtml = `
+
+ 
+
+  const kakaoMapHtml = `
     <!DOCTYPE html>
     <html lang="ko">
     <head>
@@ -27,6 +29,7 @@ const KakaoMap = ({ latitude, longitude } : any) => {
       </div>
       <script>
         kakao.maps.load(function() {
+
           const container = document.getElementById('map');
           const options = {
             center: new kakao.maps.LatLng(${latitude}, ${longitude}), // 지도의 중심좌표
@@ -47,38 +50,12 @@ const KakaoMap = ({ latitude, longitude } : any) => {
       
           marker.setMap(map);
           const mapMoveBtn = document.getElementById("map_move");
-
-          const getCurrentLocation = async () => {
-                 const { granted } = await Location.requestForegroundPermissionsAsync();
-
-                 if ( !granted ) {
-                   return;
-                 } else {
-                   try {
-                           const { coords } = await Location.getCurrentPositionAsync({accuracy: 5});
-                       } catch (error) {
-                           console.error('위치 정보를 가져오는 데 실패했습니다:', error)
-                       }
-                 }
-            };
-
-          mapMoveBtn.addEventListener('click', () => {
-          alert(${test});
-          setTest(true);
-                  getCurrentLocation();
-           });
-
-          
-            function test () {
-
-            }
-           
         });
       </script>
     </body>
     </html>
   `;
-console.log(test);
+
     return (
       <View style={styles.container}>
         <WebView
@@ -88,6 +65,11 @@ console.log(test);
             javaScriptEnabled={true}
             onLoad={() => console.log('WebView loaded successfully')}
             onError={(e) => console.error('WebView error: ', e.nativeEvent)}
+             injectedJavaScript={`(function() {
+          window.console.log = function(message) {
+            window.ReactNativeWebView.postMessage(message);
+          }
+        })();`}
         />
       </View>
     )
