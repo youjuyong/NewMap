@@ -1,7 +1,7 @@
 
 import { Image, Text, View, TouchableOpacity, useColorScheme } from 'react-native';
 import { useCallback } from "react";
-import { Root_Css, Header_Container, Section } from "../../public/styles";
+import { Header_Container, Section } from "../../public/styles";
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const Home = ({ route, navigation } : any) => {
@@ -10,7 +10,7 @@ const Home = ({ route, navigation } : any) => {
     const ButtonClick = useCallback((element : any) => {
         navigation.navigate(element);
     },[]);
-  
+    
     return (
         <>
             <View style={Header_Container.divContainer}>
@@ -28,7 +28,9 @@ const Home = ({ route, navigation } : any) => {
                     <Text style={Section.mainBoxText}>현재 위치찾기</Text>
                     <Image style={Section.mainBoxLocImg} source={require("../../public/images/location_64.png")}></Image>
                 </TouchableOpacity >
-                <TouchableOpacity  style={Section.mainBoxButton} ><Text style={Section.mainBoxText}>준비중</Text></TouchableOpacity >
+                <TouchableOpacity  style={Section.mainBoxButton} onPress = {(element) => ButtonClick('arrivalStationSearch') }>
+                    <Text style={Section.mainBoxText}>도착정보 조회</Text>
+                </TouchableOpacity >
                 <TouchableOpacity  style={Section.mainBoxButton} ><Text style={Section.mainBoxText}>준비중</Text></TouchableOpacity >
                 <TouchableOpacity  style={Section.mainBoxButton} ><Text style={Section.mainBoxText}>준비중</Text></TouchableOpacity >
                 </View>

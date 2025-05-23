@@ -75,4 +75,8 @@ export const color = {
     green300: "#A8E082",
     green400: "#80FFC0",
     green500:"#9afccc",
+    green600:"#9dfc9a",
+    green700:"#78cf80",
+
+    pink100 : "#ff4a56"
 }

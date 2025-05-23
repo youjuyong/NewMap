@@ -4,5 +4,6 @@ export declare module CommonType {
         default : undefined;
         home : undefined;
         locationSearch : undefined;
+        arrivalStationSearch : undefined;
     }
 }

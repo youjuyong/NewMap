@@ -2,12 +2,9 @@ import { Text, View, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import { WebView } from 'react-native-webview';
 import * as Location  from 'expo-location';
+import { resolver } from "../../metro.config";
 
- 
-  
 const KakaoMap = ({ latitude, longitude } : any) => {
-
- 
 
   const kakaoMapHtml = `
     <!DOCTYPE html>
@@ -50,11 +47,16 @@ const KakaoMap = ({ latitude, longitude } : any) => {
       
           marker.setMap(map);
           const mapMoveBtn = document.getElementById("map_move");
+          mapMoveBtn.addEventListener("click", () => 
+          {
+          });
         });
       </script>
     </body>
     </html>
   `;
+
+ 
 
     return (
       <View style={styles.container}>
