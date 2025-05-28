@@ -1,20 +1,38 @@
 import { Alert } from "react-native";
+import axios     from "axios";
 
-export const Apirequest = async ( url : string, callBack : (data : any) => void ) => {
-    const response = await fetch(
-        url
-    ,
-    {
-        method: 'GET',
-    },
-    );
+export async function AxiosCall(requsetType: string, url: string, data: any, _callbackFunction ?: ((data: any) => void) | null,  _errorCallback ?: ((data: any) => void) | null, token ?: string | null | undefined ) {
     
-    if (response.status === 200) {
-        const responseJson = await response.json();
-        callBack(responseJson);
-    } else {
-        Alert.alert("데이터를 불러 오지 못했습니다.");
-        return;
-    // throw new Error('unable to get');
+    const options = {
+        url: url,
+        method: requsetType,
+        params: data,
+        headers: {
+             "Content-Type": "multipart/form-data",
+        },
+        error : (data:any) => {
+            console.log(data);
+        }
     }
-};
+    console.log(options);
+    await axios(options).then(response => {
+        if ( response.status !== 200 ) {
+            Alert.alert("에러가 발생했습니다.");
+            return;
+        }
+
+        if (response.data != null) {
+            _callbackFunction && _callbackFunction(response.data);
+        }
+    });
+}
+
+
+export async function requestFecth ( url : string ) {
+    
+    await fetch(url).then(function(response) {
+        console.log(response);   
+    }).catch(function (err) {
+        console.log(err);
+    });
+}

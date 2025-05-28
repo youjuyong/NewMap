@@ -1,65 +1,100 @@
-import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, Keyboard  } from "react-native";
-import { Button, TextInputCss } from "../../public/styles";
+import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityIndicator  } from "react-native";
+import { Button, TextInputCss, Comm } from "../../public/styles";
 import { BtnContainer } from "../component/Container";
 import { useCallback, useState } from "react";
 import SubWayInfo from "../component/SubWayInfo";
-import { Apirequest } from "../common/common";
+import { AxiosCall  } from "../common/common";
+import { API_IP_INFO } from "../common/apiUrl";
+import { ArrivalInfo } from "../type/common";
+
 
 const ArrivalStationSearch = ( { route, navigation } : any ) => {
     const [subName, setSubName] = useState<string | undefined>('');
     const [isFocus, setIsFocus] = useState<boolean>(false);
+    const [arvalInfo, setArvalInfo] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
 
     const onChangeSubWayName = useCallback(( text : string ) => {
-        console.log("test");
-        
         setSubName(text);
     },[subName]);
 
-console.log(subName);
     const ButtonClick = useCallback(() => {
-        const url = `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimeStationArrival/0/5/${subName}`
-        
-        
-         const lineList = function () {
-            const sbwListUrl = `http://openapi.seoul.go.kr:8088/576e49415564627733364f744f5166/json/SearchSTNBySubwayLineInfo/1/5/%20/${subName}`;
-            
-            return new Promise( resolve => Apirequest(sbwListUrl, function (data) {
-           
-                const { list_total_count, row  } = data.SearchSTNBySubwayLineInfo;
 
-                if ( list_total_count !== 0 ) {
-                        resolve(row);
+        const param = 
+        {
+            statNm : subName
+        };
+
+        const lineList = function () {
+            return new Promise( resolve => AxiosCall("GET", `${API_IP_INFO}/subway/subway-info`, param, function ( data : any ) {
+                if ( data.length === 0 ) {
+                    Alert.alert("해당 역에 대한 정보가 없습니다.");
+                    return;
                 }
-            }));
+
+                resolve(data);
+            },));
         };
          
-         const subWaySearch = function(fnCode : number) {
-           
-            const subwayInfo = `http://openapi.seoul.go.kr:8088/576e49415564627733364f744f5166/json/SearchSTNTimeTableByFRCodeService/1/5/${fnCode}/1/1/`;
-            console.log(subwayInfo);
-                return new Promise( resolve => { Apirequest(subwayInfo, function (data) {
-                    console.log("data",data);
-                    resolve(1);
-                const { list_total_count, row  } = data.SearchSTNBySubwayLineInfo;
-                    console.log("data",data);
-                    if ( list_total_count !== 0 ) {
-                            resolve(row);
-                    }
-                })
+         const subWaySearch = async function(lineList : any) {
+                setLoading(true);
+                return await new Promise( resolve => { AxiosCall("GET", `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimeStationArrival/0/5/${subName}`, null, function (data) {
+
+                        let arrivalInfo:Array<ArrivalInfo> = [];
+                        lineList.map((lineInfo : any) => {
+                            
+                            
+                            const { SUBWAY_ID, LINE_NUM, afterStationNm, preStationNm } = lineInfo;
+
+                            if ( SUBWAY_ID === null ||  SUBWAY_ID === undefined ) 
+                            {
+                                return;
+                            } 
+                            else 
+                            {
+                                
+                                const list = data?.realtimeArrivalList;
+                                const upArrival   = list.filter((v : { subwayId : number, updnLine : string }) => Number(SUBWAY_ID) === Number(v.subwayId)  && v.updnLine === '상행' )
+                                                        .map   ((v : { bstatnNm : string, arvlMsg2 : string }) => { return { bstatnNm : v.bstatnNm, arvlMsg2 : v.arvlMsg2 }});
+                                const downArrival = list.filter((v : { subwayId : number, updnLine : string }) => Number(SUBWAY_ID) === Number(v.subwayId)  && v.updnLine === '하행' )
+                                                        .map   ((v : { bstatnNm : string, arvlMsg2 : string }) => { return { bstatnNm : v.bstatnNm, arvlMsg2 : v.arvlMsg2 }});
+
+
+                                arrivalInfo.push(Object.assign({}, {
+                                            LINE_NUM : LINE_NUM,
+                                           SUBWAY_ID : SUBWAY_ID,
+                                      afterStationNm : afterStationNm,
+                                        preStationNm : preStationNm,
+                                           upArrival : [...upArrival],
+                                         downArrival : [...downArrival],
+                                             subName : subName
+                                }));
+                            }
+                             
+                        });
+
+                      resolve(arrivalInfo);
+                });
             });
         }
 
          lineList().then((lineList : any) => {
-            
-            lineList.map((lineInfo : { STATION_NM : string, FR_CODE : number }) => {
-                return subWaySearch(lineInfo.FR_CODE);
-            });
-         }).then((data : any) => {
-            console.log(data);
+            return subWaySearch(lineList);
+         }).then((result : any) => {
+            setArvalInfo(result);
+            setLoading(false);
          });
          
-    },[]);
+    },[subName]);
 
+    if (loading) {
+            return (
+            <View style={Comm.loading}>
+                <ActivityIndicator size="large" />
+            </View>
+            );
+    }
+    
     return (
         <>
            
@@ -76,7 +111,7 @@ console.log(subName);
                     />
                      <TouchableOpacity  style={Button.SubWayNameBtn} onPress = {(element) => ButtonClick() }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
                 </View>
-                    <SubWayInfo setIsFocus={setIsFocus}></SubWayInfo>
+                    <SubWayInfo setIsFocus={setIsFocus} arvalInfo={arvalInfo} ></SubWayInfo>
            </BtnContainer>
         </>
     )
