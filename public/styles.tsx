@@ -136,6 +136,10 @@ export const Section = StyleSheet.create({
         borderColor : color.blue400
     },
 
+    timeBtnInnerDiv : {
+      width : 'auto',
+      height : 'auto'
+  } ,
     mainBoxText : {
           textAlign : 'center',
           color : color.black300,
@@ -224,6 +228,20 @@ export const Button = StyleSheet.create({
 
 export const TextInputCss = StyleSheet.create({
   arrivalTxtInput : {
+    position: "relative",
+      width : 180,
+     height : 42,
+     borderWidth : 2,
+     borderRadius : 60,
+     paddingTop : 5,
+     paddingBottom : 5,
+     paddingRight : 10,
+     paddingLeft : 15,
+     borderColor : color.blue700,
+     color : color.black,
+     fontWeight : 400
+  },
+   timeTxtInput : {
     position: "relative",
       width : 180,
      height : 42,
@@ -372,7 +390,13 @@ export const Comm = StyleSheet.create({
     position : 'relative',
     marginTop : 12,
     marginLeft : 5
-  }
+  },
+
+  taimeTalbeSelectBox : {
+    width : 80,
+    height : 40
+  },
+
 });
 
 

@@ -113,7 +113,6 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
     
     return (
         <>
-        
             <BtnContainer>
                     <View style={Button.btnInnerDiv}>
                         <TextInput
