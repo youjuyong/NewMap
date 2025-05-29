@@ -32,9 +32,13 @@ const Home = ({ route, navigation } : any) => {
                 </TouchableOpacity >
                 <TouchableOpacity  style={Section.mainBoxButton} onPress = {(element) => ButtonClick('arrivalStationSearch') }>
                     <Text style={Section.mainBoxText}>도착정보 조회</Text>
+                    <Image style={Section.mainBoxLocImg} source={require("../../public/images/arrive-icon.png")}></Image>
                 </TouchableOpacity >
-                {/* <TouchableOpacity  style={Section.mainBoxButton} ><Text style={Section.mainBoxText}>준비중</Text></TouchableOpacity >
-                <TouchableOpacity  style={Section.mainBoxButton} ><Text style={Section.mainBoxText}>준비중</Text></TouchableOpacity > */}
+                <TouchableOpacity  style={Section.mainBoxButton} onPress = {(element) => ButtonClick('timeTable') }>
+                    <Text style={Section.mainBoxText}>시간표</Text>
+                    <Image style={Section.mainBoxLocImg} source={require("../../public/images/timetable-icon.png")}></Image>
+                </TouchableOpacity >
+                {/*<TouchableOpacity  style={Section.mainBoxButton} ><Text style={Section.mainBoxText}>준비중</Text></TouchableOpacity > */}
                 </View>
             </View>
         </>

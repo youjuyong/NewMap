@@ -26,20 +26,23 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
         };
 
         const lineList = function () {
-            return new Promise( resolve => AxiosCall("GET", `${API_IP_INFO}/subway/subway-info`, param, function ( data : any ) {
+            return new Promise( resolve => 
+                AxiosCall("GET", `${API_IP_INFO}/subway/subway-info`, param, function ( data : any ) {
+                
                 if ( data.length === 0 ) {
                     Alert.alert("해당 역에 대한 정보가 없습니다.");
                     return;
                 }
-
+                console.log(data);
                 resolve(data);
-            },));
+            },)
+        );
         };
          
          const subWaySearch = async function(lineList : any) {
                 setLoading(true);
-                return await new Promise( resolve => { AxiosCall("GET", `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimeStationArrival/0/5/${subName}`, null, function (data) {
-
+                return await new Promise( resolve => { AxiosCall("GET", `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimeStationArrival/0/100/${subName}`, null, function (data) {
+                        
                         let arrivalInfo:Array<ArrivalInfo> = [];
                         lineList.map((lineInfo : any) => {
                             
@@ -50,14 +53,27 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
                             {
                                 return;
                             } 
+                            if ( data?.realtimeArrivalList === undefined || data?.realtimeArrivalList.length === 0  ) 
+                            {
+                                arrivalInfo.push(Object.assign({}, {
+                                            LINE_NUM : LINE_NUM,
+                                           SUBWAY_ID : SUBWAY_ID,
+                                      afterStationNm : afterStationNm,
+                                        preStationNm : preStationNm,
+                                           upArrival : [],
+                                         downArrival : [],
+                                             subName : subName
+                                }));
+                                return;
+                            }
                             else 
                             {
                                 
                                 const list = data?.realtimeArrivalList;
-                                const upArrival   = list.filter((v : { subwayId : number, updnLine : string }) => Number(SUBWAY_ID) === Number(v.subwayId)  && v.updnLine === '상행' )
-                                                        .map   ((v : { bstatnNm : string, arvlMsg2 : string }) => { return { bstatnNm : v.bstatnNm, arvlMsg2 : v.arvlMsg2 }});
-                                const downArrival = list.filter((v : { subwayId : number, updnLine : string }) => Number(SUBWAY_ID) === Number(v.subwayId)  && v.updnLine === '하행' )
-                                                        .map   ((v : { bstatnNm : string, arvlMsg2 : string }) => { return { bstatnNm : v.bstatnNm, arvlMsg2 : v.arvlMsg2 }});
+                                const upArrival   = list.filter((v : { subwayId : number, updnLine : string, btrainSttus : string }) => Number(SUBWAY_ID) === Number(v.subwayId)  && v.updnLine === '상행' )
+                                                        .map   ((v : { bstatnNm : string, arvlMsg2 : string, btrainSttus : string }) => { return { bstatnNm : v.bstatnNm, arvlMsg2 : v.arvlMsg2, btrainSttus : v.btrainSttus }});
+                                const downArrival = list.filter((v : { subwayId : number, updnLine : string, btrainSttus : string }) => Number(SUBWAY_ID) === Number(v.subwayId)  && v.updnLine === '하행' )
+                                                        .map   ((v : { bstatnNm : string, arvlMsg2 : string, btrainSttus : string }) => { return { bstatnNm : v.bstatnNm, arvlMsg2 : v.arvlMsg2, btrainSttus : v.btrainSttus }});
 
 
                                 arrivalInfo.push(Object.assign({}, {
@@ -67,7 +83,7 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
                                         preStationNm : preStationNm,
                                            upArrival : [...upArrival],
                                          downArrival : [...downArrival],
-                                             subName : subName
+                                             subName : subName,
                                 }));
                             }
                              

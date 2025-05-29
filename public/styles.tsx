@@ -86,6 +86,38 @@ export const Section = StyleSheet.create({
       color : '#fff'
     },
 
+    SubwayTypeList : {
+      width: '100%',
+      height :30,
+      borderTopWidth : 1,
+      borderRadius : 50,
+      paddingTop : 3,
+      paddingRight : 10,
+      fontWeight : 700,
+      fontFamily: 'Pretendard-Regular',
+      color : '#fff',
+      marginTop : 20,
+      borderColor : '#ddd',
+        flexDirection : 'row',
+      flexWrap : 'wrap',
+    },
+
+    SubwayTypeView : {
+      width : 'auto',
+      flexDirection : 'row',
+      flexWrap : 'wrap',
+      marginTop : 10,
+      marginLeft : 10
+    },
+
+    SubwayTypeText : {
+      fontWeight : 600,
+      marginLeft : 2,
+      marginTop : -2,
+      color : color.black300,
+      fontFamily: 'PretendardVariable',
+    },
+
     RouteTextType : {
       color : '#fff',
       fontWeight : 700
@@ -318,13 +350,28 @@ export const Comm = StyleSheet.create({
     height : 'auto',
     position : 'relative',
     left : 0 ,
-    fontFamily: 'PretendardVariable'
+    fontFamily: 'PretendardVariable',
+    marginBottom:15,
+    paddingBottom : 20,
+    minHeight : 130,
   },
 
   info_cntainer_text : {
     paddingTop : 10,
     paddingLeft : 10,
     fontFamily: 'PretendardVariable'
+  },
+
+  SubwayionView : {
+      flexDirection : 'row',
+      flexWrap : 'wrap',
+      height : 'auto',
+  },
+
+  SubwayionImage : {
+    position : 'relative',
+    marginTop : 12,
+    marginLeft : 5
   }
 });
 
