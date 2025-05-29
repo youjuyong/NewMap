@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityIndicator  } from "react-native";
+import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityIndicator, ScrollView  } from "react-native";
 import { Button, TextInputCss, Comm } from "../../public/styles";
 import { BtnContainer } from "../component/Container";
 import { useCallback, useState } from "react";
@@ -97,22 +97,22 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
     
     return (
         <>
-           
-           <BtnContainer>
-                <View style={Button.btnInnerDiv}>
-                    <TextInput
-                        style={[TextInputCss.arrivalTxtInput, isFocus && { backgroundColor : "#E6F7DB" }]}
-                        onChangeText={(text : string) => onChangeSubWayName(text)} // 콜백 삽입
-                        onFocus ={ (e) => setIsFocus(!isFocus)}
-                        value={subName} // value 연결
-                        placeholder="지하철명을 입력해주세요."
-                        autoComplete="email"
-                        textContentType="emailAddress"
-                    />
-                     <TouchableOpacity  style={Button.SubWayNameBtn} onPress = {(element) => ButtonClick() }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
-                </View>
-                    <SubWayInfo setIsFocus={setIsFocus} arvalInfo={arvalInfo} ></SubWayInfo>
-           </BtnContainer>
+        
+            <BtnContainer>
+                    <View style={Button.btnInnerDiv}>
+                        <TextInput
+                            style={[TextInputCss.arrivalTxtInput, isFocus && { backgroundColor : "#B3CDFF" }]}
+                            onChangeText={(text : string) => onChangeSubWayName(text)} // 콜백 삽입
+                            onFocus ={ (e) => setIsFocus(!isFocus)}
+                            value={subName} // value 연결
+                            placeholder="역명을 입력해주세요."
+                            autoComplete="email"
+                            textContentType="emailAddress"
+                        />
+                        <TouchableOpacity  style={Button.SubWayNameBtn} onPress = {(element) => ButtonClick() }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
+                    </View>
+                        <SubWayInfo setIsFocus={setIsFocus} arvalInfo={arvalInfo} ></SubWayInfo>
+            </BtnContainer>
         </>
     )
 };

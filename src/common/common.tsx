@@ -14,7 +14,7 @@ export async function AxiosCall(requsetType: string, url: string, data: any, _ca
             console.log(data);
         }
     }
-    console.log(options);
+    
     await axios(options).then(response => {
         if ( response.status !== 200 ) {
             Alert.alert("에러가 발생했습니다.");

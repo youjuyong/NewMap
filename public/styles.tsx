@@ -10,9 +10,8 @@ export const Root_Css = StyleSheet.create({
 
 export const Header_Container = StyleSheet.create({
     divContainer : {
-        marginBottom : 10,
         padding : 20,
-        backgroundColor : color.yellow500
+        backgroundColor : color.blue200
     },
     
     divInnerContainer : {
@@ -21,7 +20,9 @@ export const Header_Container = StyleSheet.create({
         padding : 20,
         alignItems : "center",
         display : "flex",
-        position:'relative'
+        position:'relative',
+        flexDirection : 'row',
+      flexWrap : 'wrap'
     },
 
     textPTag : {
@@ -98,22 +99,23 @@ export const Section = StyleSheet.create({
         marginRight : 0,
         marginLeft : 10,
         marginTop : 10,
-        backgroundColor : color.blue600,
-        borderRadius : 10
+        borderRadius : 10,
+        borderWidth : 3,
+        borderColor : color.blue400
     },
 
     mainBoxText : {
           textAlign : 'center',
-          color : color.white200,
+          color : color.black300,
           fontSize :20,
           fontWeight : 700,
           marginTop : 10,
-          fontFamily: 'Pretendard-Regular',
+         fontFamily: 'PretendardVariable'
     },
 
     mainBoxLocImg : {
-        marginLeft : "30%",
-        marginTop : 15
+        marginLeft : "25%",
+        marginTop : 15,
     },
 
     current_loc : {
@@ -124,18 +126,22 @@ export const Section = StyleSheet.create({
     SubWayInfo : {
               width : "100%",
            position : "relative",
-             height : "100%",
+             height : "auto",
+             flex : 1,
+             flexGrow : 1,
+             borderWidth : 1
     },
 
     SubWayInfoInner : {
         width : "auto",
            position : "relative",
-             height : "100%",
+             height : 800,
              borderTopWidth : 1,
              marginRight : 10,
              marginLeft : 10,
              marginTop : 10,
              borderColor : color.gray300,
+             flex : 1,
     }
 });
 
@@ -143,6 +149,7 @@ export const  Container = StyleSheet.create({
   btnContainer : {
     width : '100%',
     height : 'auto',
+    flex : 1
   }
 });
 
@@ -156,7 +163,7 @@ export const Button = StyleSheet.create({
         height : 'auto',
         marginRight : 30,
         marginLeft : 30,
-        marginBottom : 10
+        marginBottom : 10,
   },
 
   BtnText : {
@@ -178,8 +185,8 @@ export const Button = StyleSheet.create({
       borderRadius : 60,
         fontWeight : 100,
         marginLeft : 10,
-       borderColor : color.green200,
-     backgroundColor : color.green100
+       borderColor : color.blue200,
+     backgroundColor : color.blue100
    }
 });
 
@@ -194,9 +201,9 @@ export const TextInputCss = StyleSheet.create({
      paddingBottom : 5,
      paddingRight : 10,
      paddingLeft : 15,
-     borderColor : color.green700,
-     color : color.green700,
-     fontWeight : 100
+     borderColor : color.blue700,
+     color : color.black,
+     fontWeight : 400
   }
 });
 
@@ -208,6 +215,7 @@ export const Comm = StyleSheet.create({
   },
    listContainer: {
     padding: 16,
+     flexGrow : 1
   },
   itemContainer: {
     backgroundColor: '#fff',
@@ -216,7 +224,8 @@ export const Comm = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     borderWidth : 1,
-    height : 300
+    height : 'auto',
+    minHeight : 180
   },
   line: {
     fontSize: 16,
@@ -287,22 +296,27 @@ export const Comm = StyleSheet.create({
     height : 'auto',
     top : 25,
     position : 'relative',
+    flexDirection : 'row',
+      flexWrap : 'wrap',
     left : 0 
   },
 
   right_info_cntainer : {
     width : '50%',
     height : 'auto',
-    position : 'absolute',
+    position : 'relative',
     right : 0 ,
     borderLeftWidth : 1,
-    borderColor : '#ddd'
+    borderColor : '#ddd',
+    paddingBottom : 20,
+    marginBottom:15,
+    minHeight : 130,
   },
 
   left_info_cntainer : {
     width : '50%',
     height : 'auto',
-    position : 'absolute',
+    position : 'relative',
     left : 0 ,
     fontFamily: 'PretendardVariable'
   },
@@ -327,7 +341,12 @@ export const ImageStyles = StyleSheet.create({
       right : 0,
       marginTop : 10,
       marginRight : 5
-    }
+    },
+    mainBoxImg : {
+      position : "relative",
+      marginTop : 130,
+      marginLeft : 30
+    },
 });
 
 
