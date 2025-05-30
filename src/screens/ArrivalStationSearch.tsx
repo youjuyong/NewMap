@@ -26,11 +26,13 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
         };
 
         const lineList = function () {
+            setLoading(true);
             return new Promise( resolve => 
                 AxiosCall("GET", `${API_IP_INFO}/subway/subway-info`, param, function ( data : any ) {
                 
                 if ( data.length === 0 ) {
                     Alert.alert("해당 역에 대한 정보가 없습니다.");
+                    setLoading(false);
                     return;
                 }
                 console.log(data);
@@ -40,7 +42,6 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
         };
          
          const subWaySearch = async function(lineList : any) {
-                setLoading(true);
                 return await new Promise( resolve => { AxiosCall("GET", `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimeStationArrival/0/100/${subName}`, null, function (data) {
                         
                         let arrivalInfo:Array<ArrivalInfo> = [];
@@ -98,6 +99,9 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
             return subWaySearch(lineList);
          }).then((result : any) => {
             setArvalInfo(result);
+            setLoading(false);
+         }).catch((error) => {
+            Alert.alert("에러가 발생했습니다.");
             setLoading(false);
          });
          

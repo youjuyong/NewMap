@@ -18,3 +18,10 @@ export interface ArrivalInfo {
        downArrival ?: Array<Object>,
            subName ?: string
 }
+
+export interface SubWayInfo {
+    STATION_CD : number,
+    STATION_NM : string,
+    afterStationNm : string,
+    preStationNm : string
+} 

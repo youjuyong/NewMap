@@ -4,7 +4,7 @@ export const color = {
     white100 : '#f8f9fa',
     white200 : '#fffff0',
     black    : "#000",
-    black100 : "#2b2b2b",
+    black100 : "#696969",
     black200 : "#434343",
     black300 : "#686868",
     black400 : "#e0e0e0",

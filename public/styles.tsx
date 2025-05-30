@@ -138,8 +138,23 @@ export const Section = StyleSheet.create({
 
     timeBtnInnerDiv : {
       width : 'auto',
-      height : 'auto'
-  } ,
+      height : 'auto',
+      position : 'relative',
+      flexDirection : 'row',
+      flexWrap : 'wrap',
+      marginBottom : 10,
+      paddingBottom : 10,
+      paddingTop : 10,
+      borderTopWidth : 1,
+      borderColor : color.black100,
+    } ,
+
+    timeDayWeekText : {
+      marginTop : 15,
+      fontSize : 15,
+      fontFamily: 'PretendardVariable'
+    },
+  
     mainBoxText : {
           textAlign : 'center',
           color : color.black300,
@@ -178,6 +193,53 @@ export const Section = StyleSheet.create({
              marginTop : 10,
              borderColor : color.gray300,
              flex : 1,
+    },
+
+    timeTableInnerDiv : {
+      width : '100%',
+      height : 'auto',
+      flexDirection : 'row',
+      flexWrap : 'wrap'
+    },
+
+    uptimeTableInnerDiv : {
+      width :'50%',
+      height : 'auto',
+    },
+
+    downtimeTableInnerDiv : {
+      width :'50%',
+      height : 'auto',
+    },
+    
+    DirTitleView : {
+      width : '100%',
+      height : 'auto',
+      paddingTop : 10,
+      paddingBottom : 10,
+      borderBottomWidth : 1,
+      borderBottomColor : color.black100,
+      borderRadius : 10
+    },
+
+    DirTitleText : {
+      fontSize : 17,
+      textAlign : 'center',
+      fontFamily: 'PretendardVariable',
+      fontWeight : 700
+    },
+
+    DirContentView : {
+      width : '100%',
+      height : 'auto',
+      paddingLeft : 10,
+      paddingRight : 10
+    },
+    
+    DirContentText : {
+      fontSize : 13,
+      fontFamily: 'PretendardVariable',
+      marginTop : 10
     }
 });
 
@@ -201,13 +263,22 @@ export const Button = StyleSheet.create({
         marginLeft : 30,
         marginBottom : 10,
   },
-
+  
+  timeSectionBtn : {
+        marginTop : 10,
+        position: "relative",
+        width : 'auto',
+        height : 'auto',
+        marginRight : 30,
+        marginLeft : 30,
+        borderBottomWidth : 1,
+        borderColor : color.black100,
+  },
   BtnText : {
     color : color.gray700,
     fontWeight : 700,
     paddingLeft: 5,
     fontFamily: 'PretendardVariable',
-    
   },
 
    SubWayNameBtn : {
@@ -393,7 +464,7 @@ export const Comm = StyleSheet.create({
   },
 
   taimeTalbeSelectBox : {
-    width : 80,
+    width : 140,
     height : 40
   },
 
