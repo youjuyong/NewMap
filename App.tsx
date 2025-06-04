@@ -11,7 +11,6 @@ import { ScrollView, StatusBar, Image, Text, useColorScheme,
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   

@@ -69,6 +69,7 @@ export const color = {
     yellow700: "#AC6306",
     yellow800: "#76480F",
     yellow900: "#4A340E",
+    yellow1000 : "#FAE100",
 
     green100: "#E6F7DB",
     green200: "#D0F1BB",

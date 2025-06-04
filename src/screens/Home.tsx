@@ -1,18 +1,25 @@
 
-import { Image, Text, View, TouchableOpacity, useColorScheme } from 'react-native';
-import { useCallback } from "react";
+import { Image, Text, View, TouchableOpacity, useColorScheme, useWindowDimensions } from 'react-native';
+import { useCallback, useEffect, useState } from "react";
 import { Header_Container, Section, ImageStyles } from "../../public/styles";
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import HeaderTabBar from "../component/HeaderTabBar";
 
 const Home = ({ route, navigation } : any) => {
     const isDarkMode = useColorScheme() === 'dark';
 
+      const {height, width, scale, fontScale} = useWindowDimensions();
+  
     const ButtonClick = useCallback((element : any) => {
         navigation.navigate(element);
     },[]);
-    
+
+    useEffect(() => {
+    },[]);
+
     return (
         <>
+        <HeaderTabBar navigation={navigation}></HeaderTabBar>
             <View style={Header_Container.divContainer}>
                 <View style={Header_Container.divInnerContainer}>
                      <Image source={require("../../public/images/bus_icon.png")} style={ImageStyles.mainBoxImg}></Image>

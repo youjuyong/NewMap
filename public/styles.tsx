@@ -3,8 +3,8 @@ import { color } from "./var";
 
 export const Root_Css = StyleSheet.create({
    defaultSize : {
-        height : "100%",
-        width : "100%"
+    width : '100%',
+    height :780
    }
 });
 
@@ -43,8 +43,7 @@ export const Section = StyleSheet.create({
         width : "100%",
         overflow : 'hidden',
         position : 'relative',
-        textAlign : 'center',
-        flexDirection : 'row',
+        textAlign : 'center'
     },
 
     RouteTypeList : {
@@ -62,13 +61,15 @@ export const Section = StyleSheet.create({
     mainBoxInner : {
         textAlign : 'center',
         width :300,
+        height : 'auto',
         alignItems : 'center',
         position : 'relative',
         flexDirection : 'row',
         flexWrap : 'wrap',
         marginLeft : 'auto',
         marginRight : 'auto',
-        marginTop : 70,
+        marginTop : 40,
+        marginBottom : 40
     },
     
     RouteTypeInfo : {
@@ -661,4 +662,56 @@ export const RouteColor:any = StyleSheet.create({
   9999 : {
     backgroundColor : '#ddd'
   },
+});
+
+
+export const Header_Div = StyleSheet.create({
+  
+  HeaderContainer : {
+      width : '100%',
+      minHeight : 90,
+      marginBottom : 0,
+      borderWidth : 3,
+      position : 'relative',
+       flexDirection : 'row',
+    display : "flex",
+    backgroundColor : color.blue800
+  },
+
+  HeaderInner : {
+    borderWidth : 1,
+    width : '25%',
+    borderColor : color.white100
+  },
+
+  HeaderText : {
+    color : color.white200
+  }
+});
+
+export const Header_Styles = StyleSheet.create({
+
+  header_container : {
+    width : '100%',
+    height : '100%',
+    paddingTop : 50
+  },
+
+  header_Button : {
+    marginLeft : 'auto',
+    marginRight : 'auto',
+    width : 230,
+    height : 50,
+    borderWidth : 1,
+    borderRadius : 30,
+  },
+
+  kakao : {
+    backgroundColor : color.yellow1000
+  },
+
+  header_Button_Text : {
+    textAlign : 'center',
+    marginTop : 15
+  }
 });
