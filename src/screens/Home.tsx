@@ -4,17 +4,21 @@ import { useCallback, useEffect, useState } from "react";
 import { Header_Container, Section, ImageStyles } from "../../public/styles";
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import HeaderTabBar from "../component/HeaderTabBar";
+import { useSelector  } from "react-redux";
+import { rootState    } from "../common/utils/reducer/index";
 
 const Home = ({ route, navigation } : any) => {
-    const isDarkMode = useColorScheme() === 'dark';
 
-      const {height, width, scale, fontScale} = useWindowDimensions();
-  
+    const isDarkMode = useColorScheme() === 'dark';
+    const { id, connected_at } = useSelector((state: rootState)=> state.userReducer);
+    const {height, width, scale, fontScale} = useWindowDimensions();
+   
     const ButtonClick = useCallback((element : any) => {
         navigation.navigate(element);
     },[]);
 
     useEffect(() => {
+         console.log(id, connected_at);
     },[]);
 
     return (

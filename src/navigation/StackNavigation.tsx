@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { CommonType } from "../type/common";
 import Home from "../screens/Home";
 import Login from "../screens/Login";
+import MyInfo from "../screens/MyInfo";
 import LocationSearch from '../screens/LocationSearch';
 import ArrivalStationSearch from '../screens/ArrivalStationSearch';
 import TimeTable from '../screens/TimeTable';
@@ -40,6 +41,9 @@ const StackNavigation = () => {
                   </Stack.Screen>
                   <Stack.Screen name="login" options={{ headerTitle: '로그인' }}>
                         {(props) => <Login {...props} />}
+                  </Stack.Screen>
+                  <Stack.Screen name="myInfo" options={{ headerTitle: '내정보' }}>
+                        {(props) => <MyInfo {...props} />}
                   </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>

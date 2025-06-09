@@ -1,12 +1,13 @@
 export declare module CommonType {
 
     export type RootStackPageList = {
-        default : undefined;
-        home : undefined;
-        locationSearch : undefined;
+                     default : undefined;
+                        home : undefined;
+              locationSearch : undefined;
         arrivalStationSearch : undefined;
-        timeTable : undefined;
-        login : undefined;
+                   timeTable : undefined;
+                       login : undefined;
+                      myInfo : undefined;
     }
 }
 

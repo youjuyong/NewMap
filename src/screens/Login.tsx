@@ -3,6 +3,8 @@ import { Header_Styles,ImageStyles } from "../../public/styles";
 import { Header } from "@react-navigation/stack";
 import { WebView } from "react-native-webview";
 import { API_IP_INFO } from "../common/apiUrl";
+import { user_login         } from "../common/utils/reducer/userInfo";
+import { useDispatch       } from "react-redux";
 import { REDIRECT_URL } from "../common/apiUrl";
 import { client_id } from "../common/apiUrl";
 import { client_secret } from "../common/apiUrl";
@@ -19,10 +21,10 @@ const kakao = {
 }
 
 const Login = ({ route, navigation } : any) => {
+    const dispatch = useDispatch();
     const [showLoginView, setShowLoginView] = useState(false);
 
-  const handleShouldStartLoad = (event: any) => {
-    console.log("evnet 다 ", event);
+    const handleShouldStartLoad = (event: any) => {
     const url = event.url;
     const exp = "code=";
     const searchIdx = url.indexOf(exp);
@@ -33,7 +35,15 @@ const Login = ({ route, navigation } : any) => {
         accessTokenHandler(code).then((accessToken : any) => {
             return userInfoHandler (accessToken);
         }).then((userInfo : any) => {
-            console.log('유저정보', userInfo);
+            const info = {
+                      id  : userInfo.data.id,
+             connected_at : userInfo.data.connected_at,
+                    token : null,
+                 expireIn : null, 
+                 nickName : null,
+                 masterYn : null
+            }
+            dispatch(user_login(info));
             navigation.navigate('home');
         }).catch((Error) => {
             Alert.alert("로그인 실패!");
@@ -69,6 +79,7 @@ const Login = ({ route, navigation } : any) => {
 
     }
     
+    
     const userInfoHandler = async ( accessToken : string ) => {
         
         return new Promise( async (resolve) => {
@@ -81,14 +92,12 @@ const Login = ({ route, navigation } : any) => {
             };
             
             const response = await axios.get(url, header);
-            console.log("사용자 정보", response.data);
             
             resolve(response);
         });
 
     }
-
-    console.log(client_id,REDIRECT_URL );
+   
     if ( showLoginView ) {
         return (
             <WebView className="flex"
@@ -100,7 +109,6 @@ const Login = ({ route, navigation } : any) => {
             </WebView>
         )
     }
-    console.log(showLoginView);
 
     return (
         <View style={Header_Styles.header_container}>
