@@ -35,7 +35,6 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
                     setLoading(false);
                     return;
                 }
-                console.log(data);
                 resolve(data);
             },)
         );

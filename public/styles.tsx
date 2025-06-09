@@ -490,6 +490,13 @@ export const ImageStyles = StyleSheet.create({
       marginTop : 130,
       marginLeft : 30
     },
+    kakaoImg : {
+       position : "absolute",
+       left : 25,
+       top : 5,
+       width : 40,
+       height: 40
+    }
 });
 
 
@@ -712,6 +719,7 @@ export const Header_Styles = StyleSheet.create({
 
   header_Button_Text : {
     textAlign : 'center',
-    marginTop : 15
+    marginTop : 15,
+    fontWeight : 700
   }
 });
