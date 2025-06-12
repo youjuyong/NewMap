@@ -7,6 +7,8 @@ import MyInfo from "../screens/MyInfo";
 import LocationSearch from '../screens/LocationSearch';
 import ArrivalStationSearch from '../screens/ArrivalStationSearch';
 import TimeTable from '../screens/TimeTable';
+import FavorSubway from "../screens/FavorSubway";
+import FavorSubwayArrivalInfo from "../screens/FavorSubwayArrivalInfo";
 
 const StackNavigation = () => {
     
@@ -45,6 +47,13 @@ const StackNavigation = () => {
                   <Stack.Screen name="myInfo" options={{ headerTitle: '내정보' }}>
                         {(props) => <MyInfo {...props} />}
                   </Stack.Screen>
+                  <Stack.Screen name="favorSubway" options={{ headerTitle: '즐겨찾기' }}>
+                        {(props) => <FavorSubway {...props} />}
+                  </Stack.Screen>
+                  <Stack.Screen name="favorSubwayArriveInfo" options={{ headerTitle: '도착정보' }}>
+                        {(props) => <FavorSubwayArrivalInfo {...props} />}
+                  </Stack.Screen>
+                  
             </Stack.Navigator>
         </NavigationContainer>
     )

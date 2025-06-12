@@ -22,7 +22,8 @@ export const color = {
     blue1000: "#63B6FF",
     blue1100:'#2961FF',
     blue1200 :'#115bf0',
-    
+    blue1300 : '#00498c',
+
     gray0: "#FFF",
     gray100: "#F7F7F9",
     gray200: "#ebeef1",

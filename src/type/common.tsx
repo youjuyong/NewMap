@@ -8,6 +8,8 @@ export declare module CommonType {
                    timeTable : undefined;
                        login : undefined;
                       myInfo : undefined;
+                 favorSubway : undefined;
+       favorSubwayArriveInfo : undefined;
     }
 }
 

@@ -188,7 +188,7 @@ const TimeTableCompo = ({ route, navigation } : any) => {
                                                         autoComplete="email"
                                                         textContentType="emailAddress"
                         />
-                        <TouchableOpacity  style={Button.SubWayNameBtn} onPress = {(element) => ButtonClick(value, subName) }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
+                        <TouchableOpacity   onPress = {(element) => ButtonClick(value, subName) }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
                     </View>
                  </View>
                  <ScrollView style={{flex: 1}}>
@@ -212,9 +212,7 @@ const TimeTableCompo = ({ route, navigation } : any) => {
                                       <View style={Section.DirContentView}>
                                         {
                                         (  timeTable?.downDirTimeTalbleArr !== undefined && timeTable?.downDirTimeTalbleArr !== null ) && timeTable.downDirTimeTalbleArr.map((timeInfo : any, index : number) => {
-                                            console.log("테이블 ", timeInfo)  ;
                                           const { ARRIVETIME, SUBWAYENAME, EXPRESS_YN, timeOverYn } = timeInfo;
-
 
                                               return (
                                                 <Text key={timeInfo + index} style={ timeOverYn === true ? [ Section.DirContentText,{ color :  color.red500}] : Section.DirContentText }>{ARRIVETIME} {SUBWAYENAME} { EXPRESS_YN === 'G' ? '' : '(급행)'}</Text>

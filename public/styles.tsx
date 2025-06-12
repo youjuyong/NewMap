@@ -13,7 +13,7 @@ export const Root_Css = StyleSheet.create({
 export const Header_Container = StyleSheet.create({
     divContainer : {
         padding : 20,
-        backgroundColor : color.blue1200
+        backgroundColor : color.blue500
     },
     
     divInnerContainer : {
@@ -212,6 +212,14 @@ export const Section = StyleSheet.create({
              marginLeft : 10,
              marginTop : 10,
              borderColor : color.gray300,
+             flex : 1
+    },
+
+    favorListInner : {
+       width : "auto",
+           position : "relative",
+             height : 'auto',
+             borderColor : color.gray300,
              flex : 1,
     },
 
@@ -376,15 +384,62 @@ export const Comm = StyleSheet.create({
     padding: 16,
      flexGrow : 1
   },
+  favorListContainer : {
+    flexGrow : 1
+  },
   itemContainer: {
     backgroundColor: '#fff',
     padding: 16,
     marginBottom: 12,
     borderRadius: 20,
     alignItems: 'center',
-    borderWidth : 1,
     height : 'auto',
     minHeight : 180
+  },
+  favorItemConatiner : {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    flexDirection : 'row',
+    flexWrap : 'wrap',
+    position : "relative"
+  },
+  favorItemIn : {
+    padding : 5,
+    borderTopWidth : 1,
+    borderBlockColor : color.gray300
+
+  },
+  favorItemImgContainer : {
+    padding : 10,
+      width : 80,
+      position : "relative",
+  },
+  favorItemName : {
+    width : 220,
+    position : 'relative',
+  },
+  favorItemText : {
+    padding : 5,
+    fontFamily: 'PretendardVariable',
+    fontSize : 20,
+    fontWeight : 700
+  },
+  favorItemDeleteBtn : {
+    height :40,
+    width : 50,
+    padding : 10,
+    paddingLeft : 13,
+    borderRadius : 10,
+    backgroundColor : color.red600,
+  },
+  favorImgStar : {
+    height : 36,
+    width :36
+  },
+  favorItemDeleteBtnText : {
+    fontSize : 14,
+    fontWeight : 700,
+    color : color.white
   },
   line: {
     fontSize: 16,
@@ -719,7 +774,7 @@ export const Header_Div = StyleSheet.create({
       position : 'relative',
        flexDirection : 'row',
     display : "flex",
-    backgroundColor : color.blue800
+    backgroundColor : color.blue1300
   },
 
   HeaderInner : {

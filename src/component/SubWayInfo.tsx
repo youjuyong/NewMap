@@ -1,20 +1,13 @@
 import { Text, View, Pressable, ScrollView, Keyboard, FlatList, Image, TouchableWithoutFeedback  } from "react-native";
 import { Section, Comm, ImageStyles, RouteColor, Var_Color } from "../../public/styles";
-import { useCallback } from "react";
 import React from "react";
 import { ArrivalInfo } from "../type/common";
 
 
 type props = {
-    setIsFocus : ( e: boolean ) => void,
-    arvalInfo  : Array<ArrivalInfo>,
+    arvalInfo  : Array<ArrivalInfo>
 }
 const SubWayInfoCompo = ( props : props ) => {
-    
-    const onPress = useCallback(( bol : boolean ) => {
-        props.setIsFocus(false);
-        Keyboard.dismiss(); 
-    },[]);
 
     const renderItem = ( data : any ) => {
         if ( data?.item === undefined ) {

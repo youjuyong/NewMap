@@ -26,24 +26,21 @@ const FavorStartCp = (props : FavorType) => {
 
             if ( favorYn )
             {
-                AxiosCall("DELETE", `${API_IP_INFO}/subway/subway-favor`, param, function ( data : any ) {
-                    {
+                AxiosCall("DELETE", `${API_IP_INFO}/subway/subway-favor`, param, function ( data : number ) {
+                    
                         Alert.alert("즐겨 찾기에서 삭제 되었습니다.");
                         setFavorYn(false);
-                        return;
-                    } 
+                    
                     
                 },);
             }
             else 
             {
-                 console.log(param);
-                AxiosCall("PUT", `${API_IP_INFO}/subway/subway-favor`, param, function ( data : any ) {
-                    {
+                AxiosCall("PUT", `${API_IP_INFO}/subway/subway-favor`, param, function ( data : number ) {
+                    
                         Alert.alert("즐겨 찾기에 추가 되었습니다.");
                         setFavorYn(true);
-                        return;
-                    } 
+                    
                 },);
             }
 

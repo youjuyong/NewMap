@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityIndicator, Image  } from "react-native";
+import { Text, View, Alert, TouchableOpacity, TextInput, ActivityIndicator  } from "react-native";
 import { Button, TextInputCss, Comm } from "../../public/styles";
 import { BtnContainer } from "../component/Container";
 import { useCallback, useState } from "react";
@@ -136,7 +136,7 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
                                              
                         }
                     </View>
-                        <SubWayInfo setIsFocus={setIsFocus} arvalInfo={arvalInfo} ></SubWayInfo>
+                        <SubWayInfo arvalInfo={arvalInfo} ></SubWayInfo>
             </BtnContainer>
         </>
     )
