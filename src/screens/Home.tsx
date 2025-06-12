@@ -26,7 +26,6 @@ const Home = ({ route, navigation } : any) => {
         <HeaderTabBar navigation={navigation}></HeaderTabBar>
             <View style={Header_Container.divContainer}>
                 <View style={Header_Container.divInnerContainer}>
-                     <Image source={require("../../public/images/bus_icon.png")} style={ImageStyles.mainBoxImg}></Image>
                     <Text style={Header_Container.textPTag}>𝙉𝙚𝙬𝙈𝙖𝙥</Text>
                 </View>
             </View>

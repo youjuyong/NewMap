@@ -27,3 +27,9 @@ export interface SubWayInfo {
     afterStationNm : string,
     preStationNm : string
 } 
+
+export interface FavorType {
+    userId : any,
+    statNm : string | undefined
+    navigation : any
+}

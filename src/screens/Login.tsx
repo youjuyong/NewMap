@@ -4,7 +4,7 @@ import { Header } from "@react-navigation/stack";
 import { WebView } from "react-native-webview";
 import { API_IP_INFO } from "../common/apiUrl";
 import { user_login         } from "../common/utils/reducer/userInfo";
-import { useDispatch       } from "react-redux";
+import { useDispatch } from "react-redux";
 import { REDIRECT_URL } from "../common/apiUrl";
 import { client_id } from "../common/apiUrl";
 import { client_secret } from "../common/apiUrl";
@@ -55,7 +55,6 @@ const Login = ({ route, navigation } : any) => {
   };
   
     const ButtonClick = ( e : any) => {
-        console.log("버튼클릭");
         setShowLoginView(e);
     }
 
@@ -83,7 +82,6 @@ const Login = ({ route, navigation } : any) => {
     const userInfoHandler = async ( accessToken : string ) => {
         
         return new Promise( async (resolve) => {
-            console.log("userInfoHandler");
             const url = `https://kapi.kakao.com/v2/user/me`;
             const header = {
                 headers : {

@@ -8,8 +8,9 @@ export const color = {
     black200 : "#434343",
     black300 : "#686868",
     black400 : "#e0e0e0",
-
+    
     blue100: "#ECF2FF",
+    blue150: "#ECF2FF",
     blue200: "#D5E3FF",
     blue300: "#B3CDFF",
     blue400: "#81ACFF",
@@ -18,7 +19,10 @@ export const color = {
     blue700: "#2F5EC0",
     blue800: "#2F436E",
     blue900: "#28344E",
-
+    blue1000: "#63B6FF",
+    blue1100:'#2961FF',
+    blue1200 :'#115bf0',
+    
     gray0: "#FFF",
     gray100: "#F7F7F9",
     gray200: "#ebeef1",

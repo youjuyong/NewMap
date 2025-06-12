@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 import { color } from "./var";
+import { Platform } from "react-native";
+import { platform } from "os";
 
 export const Root_Css = StyleSheet.create({
    defaultSize : {
@@ -11,11 +13,11 @@ export const Root_Css = StyleSheet.create({
 export const Header_Container = StyleSheet.create({
     divContainer : {
         padding : 20,
-        backgroundColor : color.blue200
+        backgroundColor : color.blue1200
     },
     
     divInnerContainer : {
-        height : 200,
+        height : 220,
         width : "100%",
         padding : 20,
         alignItems : "center",
@@ -27,7 +29,7 @@ export const Header_Container = StyleSheet.create({
 
     textPTag : {
        position : 'absolute',
-       top : '50%',
+       top : '40%',
        left : '50%',
        marginLeft : -50,
        fontSize : 32,
@@ -39,11 +41,15 @@ export const Header_Container = StyleSheet.create({
 
 export const Section = StyleSheet.create({ 
     mainBoxDiv : {
+        borderTopStartRadius : 50,
+        borderTopEndRadius : 50,
         height : "100%",
         width : "100%",
         overflow : 'hidden',
-        position : 'relative',
-        textAlign : 'center'
+        position : 'absolute',
+        top : 310,
+        textAlign : 'center',
+        backgroundColor : color.blue150
     },
 
     RouteTypeList : {
@@ -68,7 +74,7 @@ export const Section = StyleSheet.create({
         flexWrap : 'wrap',
         marginLeft : 'auto',
         marginRight : 'auto',
-        marginTop : 40,
+        marginTop : 50,
         marginBottom : 40
     },
     
@@ -83,7 +89,7 @@ export const Section = StyleSheet.create({
       paddingTop : 3,
       paddingRight : 10,
       fontWeight : 700,
-      fontFamily: 'Pretendard-Regular',
+      fontFamily: 'PretendardVariable',
       color : '#fff'
     },
 
@@ -95,7 +101,7 @@ export const Section = StyleSheet.create({
       paddingTop : 3,
       paddingRight : 10,
       fontWeight : 700,
-      fontFamily: 'Pretendard-Regular',
+      fontFamily: 'PretendardVariable',
       color : '#fff',
       marginTop : 20,
       borderColor : '#ddd',
@@ -130,11 +136,24 @@ export const Section = StyleSheet.create({
         display : 'flex',
         position : 'relative',
         marginRight : 0,
-        marginLeft : 10,
-        marginTop : 10,
+        marginLeft : 15,
+        marginTop : 15,
         borderRadius : 10,
-        borderWidth : 3,
-        borderColor : color.blue400
+        ...Platform.select({
+          ios : {
+            shadowColor : "#000",
+            shadowOffset : {
+              width : 10,
+              height : 10
+            },
+            shadowOpacity : 0.5,
+            shadowRadius : 10
+          },
+          android : {
+            elevation : 20,
+          }
+        }),
+        backgroundColor : color.white
     },
 
     timeBtnInnerDiv : {
@@ -261,7 +280,7 @@ export const Button = StyleSheet.create({
         width : 'auto',
         height : 'auto',
         marginRight : 30,
-        marginLeft : 30,
+        marginLeft : 20,
         marginBottom : 10,
   },
   
@@ -282,26 +301,44 @@ export const Button = StyleSheet.create({
     fontFamily: 'PretendardVariable',
   },
 
-   SubWayNameBtn : {
+   SubWayNameConent : {
             width : 80,
+           height : 42,
+     paddingBottom : 5,
+      paddingRight : 10,
+       paddingLeft : 10,
+      borderRadius : 60,
+        fontWeight : 100,
+        marginLeft : 10,
+   },
+
+   SubWayNameSearchBtn : {
+    width : 60,
            height : 42,
        paddingTop : 8,
      paddingBottom : 5,
       paddingRight : 10,
-       paddingLeft : 20,
+       paddingLeft : 10,
        borderWidth : 2,
       borderRadius : 60,
         fontWeight : 100,
         marginLeft : 10,
        borderColor : color.blue200,
      backgroundColor : color.blue100
+   },
+
+
+   SubWayNameImage : {
+    width : 30,
+    height : 30,
+    marginLeft :10
    }
 });
 
 export const TextInputCss = StyleSheet.create({
   arrivalTxtInput : {
     position: "relative",
-      width : 180,
+      width : 150,
      height : 42,
      borderWidth : 2,
      borderRadius : 60,
@@ -487,7 +524,7 @@ export const ImageStyles = StyleSheet.create({
     },
     mainBoxImg : {
       position : "relative",
-      marginTop : 130,
+      marginTop : 115,
       marginLeft : 30
     },
     kakaoImg : {
@@ -721,5 +758,67 @@ export const Header_Styles = StyleSheet.create({
     textAlign : 'center',
     marginTop : 15,
     fontWeight : 700
+  }
+});
+
+
+export const MyInfo_Styled = StyleSheet.create({
+  rayout_1 : {
+    width : 'auto',
+    height : 'auto',
+    padding : 20,
+    backgroundColor : color.blue200
+  },
+
+  rayout_2 : {
+    height : 100,
+    width : '100%',
+    flexDirection : 'row',
+    flexWrap : 'wrap'
+  },
+
+  imgRayout : {
+    height : 70,
+    width : 70,
+    borderRadius : 10,
+    backgroundColor : color.gray200,
+    marginRight: 10,
+    marginTop : 10
+  },
+
+  titleRayout : {
+    height : '100%',
+    width : 138,
+    paddingTop : 20,
+    marginRight : 10
+  },
+
+  logOutRayout : {
+    height : '100%',
+    minWidth : 70,
+    marginTop : 5
+  },
+  textStyled : {
+    fontSize : 12,
+    fontWeight : 700,
+    fontFamily: 'PretendardVariable'
+  },
+
+  logoutBtnStyled : {
+    width : 60,
+    height :40,
+    paddingLeft : 10,
+    paddingTop : 10,
+    fontWeight : 700,
+    marginTop : 20,
+    borderRadius : 10,
+    backgroundColor : '#ddd',
+  },
+
+  imgStyle : {
+    height : 50,
+    width : 50,
+    marginLeft : 10,
+    marginTop : 5
   }
 });

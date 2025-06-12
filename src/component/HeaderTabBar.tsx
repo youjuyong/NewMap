@@ -1,11 +1,20 @@
 import React, { useCallback } from 'react';
 import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Header_Div  } from "../../public/styles";
+import { useSelector  } from "react-redux";
+import { rootState    } from "../common/utils/reducer/index";
 
 const HeaderTabBar = ({ state, navigation  } : any) => {
 
+    const { id, connected_at } = useSelector((state: rootState)=> state.userReducer);
+
     const ButtonClick = useCallback((element : any) => {
-        navigation.navigate(element);
+        if ( id !== null && element === 'login' ) 
+        {
+            navigation.navigate('myInfo');
+        } else {
+            navigation.navigate(element);
+        }
     },[]);
 
     return (

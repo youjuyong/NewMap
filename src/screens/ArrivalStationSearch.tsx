@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityIndicator, ScrollView  } from "react-native";
+import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityIndicator, Image  } from "react-native";
 import { Button, TextInputCss, Comm } from "../../public/styles";
 import { BtnContainer } from "../component/Container";
 import { useCallback, useState } from "react";
@@ -6,13 +6,16 @@ import SubWayInfo from "../component/SubWayInfo";
 import { AxiosCall  } from "../common/common";
 import { API_IP_INFO } from "../common/apiUrl";
 import { ArrivalInfo } from "../type/common";
-
+import { useSelector  } from "react-redux";
+import { FavorStarCompo } from "../component/FavorStarCompo";
+import { rootState    } from "../common/utils/reducer/index";
 
 const ArrivalStationSearch = ( { route, navigation } : any ) => {
     const [subName, setSubName] = useState<string | undefined>('');
     const [isFocus, setIsFocus] = useState<boolean>(false);
     const [arvalInfo, setArvalInfo] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const { id, connected_at } = useSelector((state: rootState)=> state.userReducer);
 
     const onChangeSubWayName = useCallback(( text : string ) => {
         setSubName(text);
@@ -29,15 +32,15 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
             setLoading(true);
             return new Promise( resolve => 
                 AxiosCall("GET", `${API_IP_INFO}/subway/subway-info`, param, function ( data : any ) {
-                
-                if ( data.length === 0 ) {
-                    Alert.alert("해당 역에 대한 정보가 없습니다.");
-                    setLoading(false);
-                    return;
-                }
-                resolve(data);
-            },)
-        );
+                    if ( data.length === 0 ) {
+                        Alert.alert("해당 역에 대한 정보가 없습니다.");
+                        setArvalInfo(false);
+                        setLoading(false);
+                        return;
+                    }
+                    resolve(data);
+                },)
+            );
         };
          
          const subWaySearch = async function(lineList : any) {
@@ -93,20 +96,20 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
                 });
             });
         }
-
-         lineList().then((lineList : any) => {
+        
+        lineList().then((lineList : any) => {
             return subWaySearch(lineList);
-         }).then((result : any) => {
+        }).then((result : any) => {
             setArvalInfo(result);
             setLoading(false);
-         }).catch((error) => {
+        }).catch((error) => {
             Alert.alert("에러가 발생했습니다.");
             setLoading(false);
-         });
+        });
          
     },[subName]);
 
-    if (loading) {
+    if ( loading ) {
             return (
             <View style={Comm.loading}>
                 <ActivityIndicator size="large" />
@@ -127,7 +130,11 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
                             autoComplete="email"
                             textContentType="emailAddress"
                         />
-                        <TouchableOpacity  style={Button.SubWayNameBtn} onPress = {(element) => ButtonClick() }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
+                        <TouchableOpacity  style={Button.SubWayNameSearchBtn} onPress = {(element) => ButtonClick() }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
+                        {
+                            ( arvalInfo )  &&  <FavorStarCompo userId={id} statNm={subName} navigation={navigation}></FavorStarCompo>
+                                             
+                        }
                     </View>
                         <SubWayInfo setIsFocus={setIsFocus} arvalInfo={arvalInfo} ></SubWayInfo>
             </BtnContainer>
