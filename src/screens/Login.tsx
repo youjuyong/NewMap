@@ -25,45 +25,48 @@ const Login = ({ route, navigation } : any) => {
     const [showLoginView, setShowLoginView] = useState(false);
     const [naverShowLoginView, setNaverShowLoginView] = useState(false);
 
+    // 카카오 로그인 인가
     const handleShouldStartLoad = (event: any) => {
-    const url = event.url;
-    const exp = "code=";
-    const searchIdx = url.indexOf(exp);
+        const url = event.url;
+        const exp = "code=";
+        const searchIdx = url.indexOf(exp);
 
-    if (searchIdx !== -1) {
-      const code = url.substring(searchIdx + exp.length);
-      
-        accessTokenHandler(code).then((accessToken : any) => {
-            return userInfoHandler (accessToken);
-        }).then((userInfo : any) => {
-            const info = {
-                      id  : userInfo.data.id,
-             connected_at : userInfo.data.connected_at,
-                    token : null,
-                 expireIn : null, 
-                 nickName : null,
-                 masterYn : null
-            }
-            dispatch(user_login(info));
-            navigation.navigate('home');
-        }).catch((Error) => {
-            Alert.alert("로그인 실패!");
-            return;
-        });
-      return false;
-    }
+        if (searchIdx !== -1) {
+        const code = url.substring(searchIdx + exp.length);
+        
+            accessTokenHandler(code).then((accessToken : any) => {
+                return userInfoHandler (accessToken);
+            }).then((userInfo : any) => {
+                const info = {
+                        id  : userInfo.data.id,
+                connected_at : userInfo.data.connected_at,
+                        token : null,
+                    expireIn : null, 
+                    nickName : null,
+                    masterYn : null
+                }
+                dispatch(user_login(info));
+                navigation.navigate('home');
+            }).catch((Error) => {
+                Alert.alert("로그인 실패!");
+                return;
+            });
+        return false;
+        }
     return true;
   };
-  
+
+    // 카카오 로그인 버튼 클릭시
     const KakoButtonClick = ( e : any) => {
         setShowLoginView(e);
     }
 
+    // 네이버 로그인 버튼 클릭시
     const NaverButtonClick = ( e : any ) => {
         setNaverShowLoginView(e);
     }
 
-    // access_token Get
+    // 카카오 accessToken 핸들러
      const accessTokenHandler = async ( codeString : string ) => {
 
          return new Promise( async (resolve) => {
@@ -74,8 +77,8 @@ const Login = ({ route, navigation } : any) => {
                 code : codeString
             });
 
-            const header:any  = { 'content-type' : `application/x-www-form-urlencoded` };
-            const response:any = await axios.post(url, body, header);
+            const header :  any  = { 'content-type' : `application/x-www-form-urlencoded` };
+            const response : any = await axios.post(url, body, header);
             const ACCESSTOKEN = response.data.access_token;
 
             resolve(ACCESSTOKEN);
@@ -101,6 +104,7 @@ const Login = ({ route, navigation } : any) => {
 
     }
 
+      // 네이버 인가
       const naverCodeHandler = async ( state : any  ) => {
 
         return new Promise ( async (resolve) => {
@@ -121,6 +125,7 @@ const Login = ({ route, navigation } : any) => {
         });
       } 
 
+      // 네이버 AccessToken 발급
       const naverAccessTokenHandler = async ( code : string ) => {
 
             const TOKEN_URL = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${naver_client_id}&client_secret=${naver_client_secret}&code=${code}&state=${encodeURIComponent("sunrise")}`;
@@ -142,9 +147,9 @@ const Login = ({ route, navigation } : any) => {
 
             if (response) {
                     const info = {
-                            id  : response?.id,
+                             id  : response?.id,
                     connected_at : String(new Date()),
-                            token : null,
+                           token : null,
                         expireIn : null, 
                         nickName : response?.name,
                         masterYn : null
