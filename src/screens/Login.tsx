@@ -11,6 +11,7 @@ import { client_secret } from "../common/apiUrl";
 import { naver_client_id } from "../common/apiUrl";
 import { naver_client_secret } from "../common/apiUrl";
 import { useState, } from "react"; 
+import { NaverAuthType, KakaoLoginProfileType } from "../type/common";
 import axios  from "axios";
 import qs from "qs";
 
@@ -26,7 +27,7 @@ const Login = ({ route, navigation } : any) => {
     const [naverShowLoginView, setNaverShowLoginView] = useState(false);
 
     // 카카오 로그인 인가
-    const handleShouldStartLoad = (event: any) => {
+    const handleShouldStartLoad = ( event: any ) => {
         const url = event.url;
         const exp = "code=";
         const searchIdx = url.indexOf(exp);
@@ -34,9 +35,10 @@ const Login = ({ route, navigation } : any) => {
         if (searchIdx !== -1) {
         const code = url.substring(searchIdx + exp.length);
         
-            accessTokenHandler(code).then((accessToken : any) => {
+            accessTokenHandler(code).then(( accessToken : any ) => {
                 return userInfoHandler (accessToken);
             }).then((userInfo : any) => {
+                console.log("useInfo", userInfo);
                 const info = {
                         id  : userInfo.data.id,
                 connected_at : userInfo.data.connected_at,
@@ -57,12 +59,12 @@ const Login = ({ route, navigation } : any) => {
   };
 
     // 카카오 로그인 버튼 클릭시
-    const KakoButtonClick = ( e : any) => {
+    const KakoButtonClick = ( e: boolean)  => {
         setShowLoginView(e);
     }
 
     // 네이버 로그인 버튼 클릭시
-    const NaverButtonClick = ( e : any ) => {
+    const NaverButtonClick = ( e : boolean ) => {
         setNaverShowLoginView(e);
     }
 
@@ -105,21 +107,21 @@ const Login = ({ route, navigation } : any) => {
     }
 
       // 네이버 인가
-      const naverCodeHandler = async ( state : any  ) => {
+      const naverCodeHandler = async ( state : NaverAuthType ) => {
 
         return new Promise ( async (resolve) => {
 
             let url = state?.url;
-            let queryString = url.split('?')[1];
+            let queryString     = url.split('?')[1];
             let queryParameters = queryString.split('&');
 
-            queryParameters = queryParameters.map((param : any) => {
-                const paramName = param.split('=')[0]
+            const paramObj = queryParameters.map(( param : string ) => {
+                const paramName  = param.split('=')[0]
                 const paramValue = param.split('=')[1]
                 return { [paramName]: paramValue }
             });
-
-            const code = queryParameters[0].code;
+         
+            const code = paramObj[0].code;
 
             resolve(code);
         });
@@ -129,7 +131,7 @@ const Login = ({ route, navigation } : any) => {
       const naverAccessTokenHandler = async ( code : string ) => {
 
             const TOKEN_URL = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${naver_client_id}&client_secret=${naver_client_secret}&code=${code}&state=${encodeURIComponent("sunrise")}`;
-
+            
             let result : any = await fetch( TOKEN_URL, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -138,7 +140,7 @@ const Login = ({ route, navigation } : any) => {
             const PROFILE_URL = "https://openapi.naver.com/v1/nid/me";
             result = await fetch(PROFILE_URL, {
                 headers: {
-                'Authorization': `Bearer ${result.access_token}`, 
+                'Authorization': `Bearer ${result?.access_token}`,
                 }
             });
 
@@ -160,7 +162,7 @@ const Login = ({ route, navigation } : any) => {
             }
       }
 
-    const handleResponseFromNaverLogin =  (state : any) : any => {
+    const handleResponseFromNaverLogin =  ( state : any ) : boolean => {
             naverCodeHandler(state).then(( code : any ) => {
                     naverAccessTokenHandler(code);
                     return false;

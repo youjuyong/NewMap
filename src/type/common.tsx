@@ -35,3 +35,46 @@ export interface FavorType {
     statNm : string | undefined
     navigation : any
 }
+
+export interface NaverAuthType {
+    canGoForward : boolean,
+    loading : true,
+    title : string,
+    canGoBack : boolean,
+    locakIdentifier : number,
+    url : string,
+    target : any
+}
+
+export interface KakaoLoginProfileType {
+    data : {
+        id : number,
+        connected_at : string
+    },
+    status : number,
+    url : string,
+}
+
+export type RootStackParamList = {
+  Home: undefined,
+  Movie: {
+    id: number;
+    title: string;
+    overview: string;
+    voteCount: number;
+  },
+  Login: {
+    id: number;
+    title: string;
+    overview: string;
+    voteCount: number;
+  },
+  login: {
+    id: number;
+    title: string;
+    overview: string;
+    voteCount: number;
+  },
+  home : any,
+
+};
