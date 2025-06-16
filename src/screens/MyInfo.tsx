@@ -7,7 +7,7 @@ import { user_clear } from "../common/utils/reducer/userInfo";
 
 const MyInfo = ({ route, navigation } : any) => {
     const dispatch = useDispatch();
-    const { id, connected_at } = useSelector((state: rootState)=> state.userReducer);
+    const { id, connected_at, nickName } = useSelector((state: rootState)=> state.userReducer);
 
     const ButtonClick = () => {
             dispatch(user_clear());
@@ -21,7 +21,7 @@ const MyInfo = ({ route, navigation } : any) => {
                     <Image style={MyInfo_Styled.imgStyle} source={require("../../public/images/user.png")}></Image>
                 </View>
                  <View style={MyInfo_Styled.titleRayout}>
-                    <Text style={MyInfo_Styled.textStyled}>{id}님</Text>
+                    <Text style={MyInfo_Styled.textStyled}>{ ( nickName !== null && nickName !== undefined ) ? nickName : id }님</Text>
                     <Text style={MyInfo_Styled.textStyled}>로그인 시간 : {connected_at}</Text>
                  </View>
                    <View style={MyInfo_Styled.logOutRayout}>

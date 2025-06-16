@@ -2,14 +2,14 @@ import { Text, View, Image, TouchableOpacity, Alert } from "react-native";
 import { Header_Styles,ImageStyles } from "../../public/styles";
 import { Header } from "@react-navigation/stack";
 import { WebView } from "react-native-webview";
-import { API_IP_INFO } from "../common/apiUrl";
 import { user_login         } from "../common/utils/reducer/userInfo";
 import { useDispatch } from "react-redux";
 import { REDIRECT_URL } from "../common/apiUrl";
+import { NAVER_REDIRECT_URL } from "../common/apiUrl";
 import { client_id } from "../common/apiUrl";
 import { client_secret } from "../common/apiUrl";
-
-
+import { naver_client_id } from "../common/apiUrl";
+import { naver_client_secret } from "../common/apiUrl";
 import { useState, } from "react"; 
 import axios  from "axios";
 import qs from "qs";
@@ -23,6 +23,7 @@ const kakao = {
 const Login = ({ route, navigation } : any) => {
     const dispatch = useDispatch();
     const [showLoginView, setShowLoginView] = useState(false);
+    const [naverShowLoginView, setNaverShowLoginView] = useState(false);
 
     const handleShouldStartLoad = (event: any) => {
     const url = event.url;
@@ -54,8 +55,12 @@ const Login = ({ route, navigation } : any) => {
     return true;
   };
   
-    const ButtonClick = ( e : any) => {
+    const KakoButtonClick = ( e : any) => {
         setShowLoginView(e);
+    }
+
+    const NaverButtonClick = ( e : any ) => {
+        setNaverShowLoginView(e);
     }
 
     // access_token Get
@@ -95,6 +100,72 @@ const Login = ({ route, navigation } : any) => {
         });
 
     }
+
+      const naverCodeHandler = async ( state : any  ) => {
+
+        return new Promise ( async (resolve) => {
+
+            let url = state?.url;
+            let queryString = url.split('?')[1];
+            let queryParameters = queryString.split('&');
+
+            queryParameters = queryParameters.map((param : any) => {
+                const paramName = param.split('=')[0]
+                const paramValue = param.split('=')[1]
+                return { [paramName]: paramValue }
+            });
+
+            const code = queryParameters[0].code;
+
+            resolve(code);
+        });
+      } 
+
+      const naverAccessTokenHandler = async ( code : string ) => {
+
+            const TOKEN_URL = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${naver_client_id}&client_secret=${naver_client_secret}&code=${code}&state=${encodeURIComponent("sunrise")}`;
+
+            let result : any = await fetch( TOKEN_URL, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            result = await result.json();
+            const PROFILE_URL = "https://openapi.naver.com/v1/nid/me";
+            result = await fetch(PROFILE_URL, {
+                headers: {
+                'Authorization': `Bearer ${result.access_token}`, 
+                }
+            });
+
+            result = await result.json();
+            const { response } = result;
+
+            if (response) {
+                    const info = {
+                            id  : response?.id,
+                    connected_at : String(new Date()),
+                            token : null,
+                        expireIn : null, 
+                        nickName : response?.name,
+                        masterYn : null
+                    }
+                dispatch(user_login(info));
+                navigation.navigate('home');
+                return false;
+            }
+      }
+
+    const handleResponseFromNaverLogin =  (state : any) : any => {
+            naverCodeHandler(state).then(( code : any ) => {
+                    naverAccessTokenHandler(code);
+                    return false;
+            }).catch((error) => {
+                Alert.alert("로그인 실패 했습니다.");
+                return true;
+            });
+
+            return true;
+    };
    
     if ( showLoginView ) {
         return (
@@ -108,11 +179,31 @@ const Login = ({ route, navigation } : any) => {
         )
     }
 
+    if ( naverShowLoginView ) {
+        return (
+            <WebView className="flex"
+                source={{
+                    uri: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_client_id}&state=${encodeURIComponent("sunrise")
+        }&redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URL)}`
+                }}
+                 scrollEnabled
+              onShouldStartLoadWithRequest={(state) => handleResponseFromNaverLogin(state)}
+            >
+            </WebView>
+        )
+    }
+
+  
+
     return (
         <View style={Header_Styles.header_container}>
-            <TouchableOpacity style={[Header_Styles.header_Button, Header_Styles.kakao]} onPress={(element) => ButtonClick(true)}>
+            <TouchableOpacity style={[Header_Styles.header_Button, Header_Styles.kakao]} onPress={(element) => KakoButtonClick(true)}>
                     <Image source={require("../../public/images/kakao_logo.png")} style={ImageStyles.kakaoImg}></Image>
                     <Text style={Header_Styles.header_Button_Text}>카카오로 시작하기</Text>
+            </TouchableOpacity>
+             <TouchableOpacity style={[Header_Styles.header_Button, Header_Styles.naver]} onPress={(element) => NaverButtonClick(true)}>
+                    <Image source={require("../../public/images/naver_logo.png")} style={ImageStyles.kakaoImg}></Image>
+                    <Text style={Header_Styles.header_Button_Text}>네이버로 시작하기</Text>
             </TouchableOpacity>
         </View>
     )

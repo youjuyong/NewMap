@@ -84,5 +84,6 @@ export const color = {
     green600:"#9dfc9a",
     green700:"#78cf80",
 
-    pink100 : "#ff4a56"
+    pink100 : "#ff4a56",
+    naverBtnColor : "#03c75a"
 }

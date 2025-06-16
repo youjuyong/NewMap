@@ -803,6 +803,7 @@ export const Header_Styles = StyleSheet.create({
     height : 50,
     borderWidth : 1,
     borderRadius : 30,
+    marginBottom : 20
   },
 
   kakao : {
@@ -813,6 +814,10 @@ export const Header_Styles = StyleSheet.create({
     textAlign : 'center',
     marginTop : 15,
     fontWeight : 700
+  },
+
+  naver : {
+    backgroundColor : color.naverBtnColor
   }
 });
 
