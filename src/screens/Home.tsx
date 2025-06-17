@@ -49,7 +49,7 @@ const Home = ({ route, navigation } : any) => {
             }, Section.mainBoxDiv]}>
                 <View style={Section.mainBoxInner}>
                     <TouchableOpacity  style={Section.mainBoxButton} onPress = {(element) => ButtonClick('locationSearch') }>
-                        <Text style={Section.mainBoxText}>현재 위치찾기</Text>
+                        <Text style={Section.mainBoxText}>노선별 도착정보</Text>
                         <Image style={Section.mainBoxLocImg} source={require("../../public/images/location_64.png")}></Image>
                     </TouchableOpacity>
                     <TouchableOpacity  style={Section.mainBoxButton} onPress = {(element) => ButtonClick('arrivalStationSearch') }>

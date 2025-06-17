@@ -3,9 +3,8 @@ import { Text, View, StyleSheet, Alert, TouchableOpacity, TextInput, ActivityInd
 import { Button, TextInputCss, Comm, Section } from "../../public/styles";
 import { color } from "../../public/var";
 import { AxiosCall    } from "../common/common";
-import { BtnContainer } from "../component/Container";
+import { Button_Tochable_style, Text_Input_Style } from "../../public/styled_compo";
 import { API_IP_INFO  } from "../common/apiUrl";
-import { SubWayInfo  } from "../type/common";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const TimeTableCompo = ({ route, navigation } : any) => {
@@ -179,16 +178,18 @@ const TimeTableCompo = ({ route, navigation } : any) => {
                         />
                     </View>
                     <View style={Section.timeBtnInnerDiv}>
-                        <TextInput
-                                                        style={[TextInputCss.timeTxtInput, isFocus && { backgroundColor : "#B3CDFF" }]}
-                                                        onChangeText={(text : string) => onChangeSubWayName(text)} // 콜백 삽입
-                                                        onFocus ={ (e) => setIsFocus(!isFocus)}
-                                                        value={subName} // value 연결
-                                                        placeholder="역명을 입력해주세요."
-                                                        autoComplete="email"
-                                                        textContentType="emailAddress"
-                        />
-                        <TouchableOpacity   onPress = {(element) => ButtonClick(value, subName) }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
+                        <Text_Input_Style
+                                                    style={[isFocus && { backgroundColor : "#B3CDFF" }]}
+                                                    onChangeText={(text : string) => onChangeSubWayName(text)} 
+                                                    onFocus ={ (e) => setIsFocus(!isFocus)}
+                                                    value={subName}
+                                                    placeholder="역명을 입력해주세요."
+                                                    autoComplete="email"
+                                                    textContentType="emailAddress"
+                                                    width={'150px'}
+                                                    height={'42px'}
+                                                />
+                        <Button_Tochable_style width={'80px'} height={'50px'} onPress = {(element) => ButtonClick(value, subName) }><Text style={Button.Btn_1_Text}>검색</Text></Button_Tochable_style>
                     </View>
                  </View>
                  <ScrollView style={{flex: 1}}>

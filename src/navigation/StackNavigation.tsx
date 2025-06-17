@@ -32,7 +32,7 @@ const StackNavigation = () => {
                   <Stack.Screen name="home" options={{ headerShown   : false}}>
                          {(props) => <Home {...props} />}
                   </Stack.Screen>
-                  <Stack.Screen name="locationSearch" options={{ headerTitle: '현재 위치찾기' }} >
+                  <Stack.Screen name="locationSearch" options={{ headerTitle: '노선별 도착정보' }} >
                         {(props) => <LocationSearch {...props} />}
                   </Stack.Screen>
                   <Stack.Screen name="arrivalStationSearch" options={{ headerTitle: '도착정보 조회' }}>

@@ -166,7 +166,7 @@ export const Section = StyleSheet.create({
       paddingBottom : 10,
       paddingTop : 10,
       borderTopWidth : 1,
-      borderColor : color.black100,
+      borderColor : '#ddd',
     } ,
 
     timeDayWeekText : {
@@ -300,10 +300,17 @@ export const Button = StyleSheet.create({
         marginRight : 30,
         marginLeft : 30,
         borderBottomWidth : 1,
-        borderColor : color.black100,
+        borderColor : '#ddd',
   },
   BtnText : {
     color : color.gray700,
+    fontWeight : 700,
+    paddingLeft: 5,
+    fontFamily: 'PretendardVariable',
+  },
+
+  Btn_1_Text : {
+    color : color.white,
     fontWeight : 700,
     paddingLeft: 5,
     fontFamily: 'PretendardVariable',
@@ -335,7 +342,6 @@ export const Button = StyleSheet.create({
      backgroundColor : color.blue100
    },
 
-
    SubWayNameImage : {
     width : 30,
     height : 30,
@@ -348,6 +354,7 @@ export const TextInputCss = StyleSheet.create({
     position: "relative",
       width : 150,
      height : 42,
+     marginTop : 5,
      borderWidth : 2,
      borderRadius : 60,
      paddingTop : 5,
@@ -561,6 +568,10 @@ export const Comm = StyleSheet.create({
     height : 40
   },
 
+  selectBox2 : {
+    height : 60,
+    width : 140
+  }
 });
 
 

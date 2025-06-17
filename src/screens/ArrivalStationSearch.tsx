@@ -9,6 +9,7 @@ import { ArrivalInfo } from "../type/common";
 import { useSelector  } from "react-redux";
 import { FavorStarCompo } from "../component/FavorStarCompo";
 import { rootState    } from "../common/utils/reducer/index";
+import { Button_Tochable_style, Text_Input_Style } from "../../public/styled_compo";
 
 const ArrivalStationSearch = ( { route, navigation } : any ) => {
     const [subName, setSubName] = useState<string | undefined>('');
@@ -121,16 +122,18 @@ const ArrivalStationSearch = ( { route, navigation } : any ) => {
         <>
             <BtnContainer>
                     <View style={Button.btnInnerDiv}>
-                        <TextInput
-                            style={[TextInputCss.arrivalTxtInput, isFocus && { backgroundColor : "#B3CDFF" }]}
-                            onChangeText={(text : string) => onChangeSubWayName(text)} // 콜백 삽입
+                        <Text_Input_Style
+                            style={[isFocus && { backgroundColor : "#B3CDFF" }]}
+                            onChangeText={(text : string) => onChangeSubWayName(text)} 
                             onFocus ={ (e) => setIsFocus(!isFocus)}
-                            value={subName} // value 연결
+                            value={subName}
                             placeholder="역명을 입력해주세요."
                             autoComplete="email"
                             textContentType="emailAddress"
+                            width={'150px'}
+                            height={'42px'}
                         />
-                        <TouchableOpacity  style={Button.SubWayNameSearchBtn} onPress = {(element) => ButtonClick() }><Text style={Button.BtnText}>검색</Text></TouchableOpacity >
+                       <Button_Tochable_style width={'80px'} height={'50px'} onPress = {(element) => ButtonClick() }><Text style={Button.Btn_1_Text}>검색</Text></Button_Tochable_style>
                         {
                             ( arvalInfo )  &&  <FavorStarCompo userId={id} statNm={subName} navigation={navigation}></FavorStarCompo>
                                              

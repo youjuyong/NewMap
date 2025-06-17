@@ -20,9 +20,7 @@ const KakaoMap = ({ latitude, longitude } : any) => {
       </style>
     </head>
     <body>
-       <button class='map_move' id="map_move">내위치</button> 
       <div id="map">
-      
       </div>
       <script>
         kakao.maps.load(function() {
