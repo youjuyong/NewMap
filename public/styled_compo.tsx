@@ -3,8 +3,8 @@ import { TextInput, TouchableOpacity } from "react-native";
 import { color } from "./var";
 
 interface Button_Touchable_type {
-     width : string,
-    height : string
+     width : string | number,
+    height : string | number
 }
 export const Button_Tochable_style = styled(TouchableOpacity)<Button_Touchable_type>`
            width : ${(props) => props.width};
@@ -27,7 +27,7 @@ interface Text_Input_type {
 }
 export const Text_Input_Style = styled(TextInput)<Text_Input_type>`
       position : "relative";
-         width : ${(props) => props.width};
+     min-width : ${(props) => props.width};
         height : ${(props) => props.height};
      marginTop : 5px;
    borderWidth : 2px;

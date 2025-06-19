@@ -6,6 +6,9 @@ import KakaoMap from "../component/KakaoMap";
 import { Button_Tochable_style } from '../../public/styled_compo';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Section } from "../../public/styles";
+import { Subway_Object } from "../common/object";
+import { API_IP_INFO } from "../common/apiUrl";
+import { AxiosCall } from "../common/common";
 
 const LocationSearch = ({ route, navigation } : any) => {
 
@@ -13,15 +16,12 @@ const LocationSearch = ({ route, navigation } : any) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState<any>();
     const [loading, setLoading] = useState(false);
-    const [items, setItems] = useState([
-      {id: '1', label: '[1]평일', value: '1'},
-      {id: '2', label: '[2]토요일', value: '2'},
-      {id: '3', label: '[3]휴일/일요일', value: '3'}
-    ]);
+    const [items, setItems] = useState([...Subway_Object]);
+    const [rtArrivalInfo, setRtArrivalInfo] = useState();
 
     const getCurrentLocation = async (element ?: any) => {
       const { granted } = await Location.requestForegroundPermissionsAsync();
-    
+
       if ( !granted ) 
       {
         return;
@@ -39,13 +39,39 @@ const LocationSearch = ({ route, navigation } : any) => {
     };
 
     const ButtonClick = useCallback(( routeName : string ) => {
-      Alert.alert("클릭");
+      console.log(routeName);
+      if ( routeName !== undefined ) 
+      {
+          SubwayRouteList(routeName).then((data : any) => {
+            console.log(data);
+            setLoading(false)
+          }).catch((error) => {
+            setLoading(false);
+          });
+      }
     },[]);
+    
+    const SubwayRouteList = async ( routeName : string ) => {
+        return await new Promise( resolve => { 
+          console.log("routeName", routeName);
+            const param = {
+              routeName : routeName
+            }
+            setLoading(true);
+            AxiosCall("GET", `${API_IP_INFO}/subway/subway-route-info`, param, function (data) {
+              console.log(data);
+              resolve(data);
+            }, () => {
+                setLoading(false);
+            });
+        });
+    }
 
+    
     useEffect(() => {
         getCurrentLocation();
     },[]);
-    
+       console.log(location);
     if ( loading ) {
                 return (
                 <View style={Comm.loading}>
@@ -53,7 +79,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                 </View>
                 );
     }
-
+    console.log(location);
     return (
       <View style={styles.container}>
              <View style={Button.timeSectionBtn}>
