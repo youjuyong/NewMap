@@ -76,5 +76,23 @@ export type RootStackParamList = {
     voteCount: number;
   },
   home : any,
-
 };
+
+export interface RouteSubWayInfo {
+  STATION_NM : string,
+  STATION_CD : string,
+  X_CRDN : string,
+  Y_CRDN : string,
+  CHANGE_STAT_YN : string
+} 
+
+export interface  locationType {
+  latitude : number | undefined,
+  longitude : number | undefined,
+  subWayInfoList : RouteSubWayInfo[] | any
+}
+
+export interface RouteInfoState {
+   routeSubwayInfo: any;
+  setRouteSubwayInfo: (e : locationType) => void;
+}

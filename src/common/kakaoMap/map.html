@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Kakao Map</title>
+      <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b177a3c695762bf4dee23f352c19cbee&libraries=services"></script>
+      <style>
+        html, body, #map { margin: 0; padding: 0; width: 100%; height: 500px; }
+        .map_move {position : absolute; z-index : 99999; width : 120px; height : 60px;  }
+      </style>
+    </head>
+    <body>
+      <div id="map">
+      </div>
+      <script>
+        kakao.maps.load(function() {
+
+          const STATION_MARKER = [];
+          const VER_TEX        = [];
+
+          const Markers = {
+            statMarker : {
+              SIZE : {
+                  WIDTH  : 5,
+                  HEIGHT : 5
+              },
+              SRC : "../../../public/images/station_mark_10.png"
+            },
+            
+            changeMarker : {
+              SIZE : {
+                  WIDTH  : 5,
+                  HEIGHT : 5
+              },
+              SRC : "../../../public/images/change_station_img.png"
+            }
+          }
+          
+          const routeColorSeriz = {
+            1001 : {
+              backgroundColor : '#0052A4'
+            },
+
+            1002 : {
+              backgroundColor : '#00A84D'
+            },
+
+            1003 : {
+              backgroundColor : '#EF7C1C'
+            },
+
+            1004 : {
+              backgroundColor : '#00A5DE'
+            },
+
+            1005 : {
+              backgroundColor : '#996CAC'
+            },
+
+            1006 : {
+              backgroundColor : '#CD7C2F'
+            },
+
+            1007 : {
+              backgroundColor : '#747F00'
+            },
+
+            1008 : {
+              backgroundColor : '#E6186C'
+            },
+
+            1009 : {
+              backgroundColor : '#BB8336'
+            },
+
+            1092 : {
+              backgroundColor : '#B7C452'
+            },
+
+            1065 : {
+              backgroundColor : '#0065B3'
+            },
+
+            1077 : {
+              backgroundColor : '#D4003B'
+            },
+
+            1063 : {
+              backgroundColor : '#77C4A3'
+            },
+
+            1075 : {
+              backgroundColor : '#F5A200'
+            },
+
+            1081 : {
+              backgroundColor : '#003DA5'
+            },
+
+            1067 : {
+              backgroundColor : '#0C8E72'
+            },
+
+            1093 : {
+              backgroundColor : '#81A914'
+            },
+
+            1032 : {
+              backgroundColor : '#9A6292'
+            },
+
+            9999 : {
+              backgroundColor : '#ddd'
+            },
+          }
+
+          document.addEventListener("message", (e) => {
+
+             const { latitude, longitude, subWayInfoList} = JSON.parse(e.data);
+
+              const container = document.getElementById('map');
+              const options = {
+                center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+                level: 3
+              };
+          
+              // 마커
+              let marker = null;
+              
+              // 맵
+              let container_map = new kakao.maps.Map(container, options);
+              
+              // 현재 자신의 마커 추가
+              const markerPosition = new kakao.maps.LatLng(latitude, longitude);
+              marker = new kakao.maps.Marker({
+                    position: markerPosition
+              });
+              marker.setMap( container_map );
+              
+              let pathArray = [];
+
+              subWayInfoList.map(( info ) => {
+
+                  const { STATION_NM, X_CRDN, Y_CRDN, CHANGE_STAT_YN } = info; 
+
+                  const imageSize = new kakao.maps.Size(20, 20);
+                  const imageOption = {offset: new kakao.maps.Point(10, 10),alt : STATION_NM};
+                  const markerImage = new kakao.maps.MarkerImage(markerSrcHandler(CHANGE_STAT_YN), imageSize, imageOption);
+                  const position = new kakao.maps.LatLng(Y_CRDN, X_CRDN);
+
+                  const stat_marker = new kakao.maps.Marker({
+                      position: position, 
+                      image: markerImage, // 마커이미지 설정 
+                      title: STATION_NM
+                  });
+
+                  stat_marker.setMap(container_map);
+                  STATION_MARKER.push(stat_marker);
+                  
+                  
+                  pathArray.push(new kakao.maps.LatLng(Y_CRDN, X_CRDN));
+              });
+
+              let polyline = initVrtxPoly(subWayInfoList[0].SUBWAY_ID);
+
+              polyline.setPath(pathArray);
+              polyline.setMap(container_map);
+
+              function initVrtxPoly ( SUBWAY_ID ) {
+                let color = '';
+                
+                if   ( SUBWAY_ID === null ) color = "#9d9d9d";
+                else                    color = routeColorSeriz[SUBWAY_ID]['backgroundColor'];
+
+                const options = {
+                    strokeWeight : 4,
+                    strokeColor : color,
+                    strokeOpacity : 0.9,
+                    strokeStyle : "solid",
+                    clickable : false,
+                    zIndex : 2,
+                };
+                
+                const polyline = new kakao.maps.Polyline(options);
+                return polyline;
+              }
+
+              function markerSrcHandler ( changeYn ) {
+                if ( changeYn === 'Y' ) return Markers.changeMarker.SRC;
+                else                    return Markers.statMarker.SRC;
+              }
+              
+          });
+        });
+      </script>
+    </body>
+</html>
