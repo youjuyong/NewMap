@@ -12,7 +12,8 @@ import { AxiosCall } from "../common/common";
 import useRouteStore  from "../common/utils/store/useRouteStore";
 import { RouteInfoState } from "../type/common";
 
-const LocationSearch = () => {
+const LocationSearch = ({ route, navigation } : any) => {
+  
     const { routeSubwayInfo, setRouteSubwayInfo } : RouteInfoState= useRouteStore();
     const [open,       setOpen] = useState(false);
     const [value,     setValue] = useState<any>();
@@ -72,6 +73,10 @@ const LocationSearch = () => {
 
     useEffect(() => {
         getCurrentLocation();
+
+        return () => {
+          setRouteSubwayInfo({latitude: routeSubwayInfo.latitude, longitude: routeSubwayInfo.longitude, subWayInfoList : []});
+        }
     },[]);
    
     if ( loading ) {
