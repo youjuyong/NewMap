@@ -8,7 +8,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Section } from "../../public/styles";
 import { Subway_Object } from "../common/object";
 import { API_IP_INFO } from "../common/apiUrl";
-import { AxiosCall } from "../common/common";
+import { AxiosCall, trainStatHandler, upDownLineStatHandler } from "../common/common";
+import { RouteSubWayInfo } from "../type/common";
 import useRouteStore  from "../common/utils/store/useRouteStore";
 import { RouteInfoState } from "../type/common";
 
@@ -31,7 +32,8 @@ const LocationSearch = ({ route, navigation } : any) => {
       {
         try {
                 const { coords } = await Location.getCurrentPositionAsync({accuracy: 5});
-                setRouteSubwayInfo({latitude: coords.latitude, longitude: coords.longitude, subWayInfoList : []});
+
+                setRouteSubwayInfo({latitude: coords?.latitude, longitude: coords?.longitude, subWayInfoList : []});
             } catch (error) {
                 console.error('위치 정보를 가져오는 데 실패했습니다:', error)
             }
@@ -40,20 +42,46 @@ const LocationSearch = ({ route, navigation } : any) => {
 
     const ButtonClick = useCallback(( routeName : string ) => {
       if ( routeName !== undefined ) 
-      {
-          SubwayRouteList(routeName).then((data ) => {
-            setRouteSubwayInfo({latitude : routeSubwayInfo?.latitude,longitude : routeSubwayInfo?.longitude , subWayInfoList : data });
-            setLoading(false)
+      { 
+          setLoading(true);
+          SubwayRouteList(routeName).then(( data ) => {
+              return SubwayRouteArriveInfo(data, routeName);
+          }).then((data) => {
+              setRouteSubwayInfo({latitude : routeSubwayInfo?.latitude,longitude : routeSubwayInfo?.longitude , subWayInfoList : data });
+              setLoading(false);
           }).catch((error) => {
             setLoading(false);
           });
       }
     },[routeSubwayInfo?.latitude, routeSubwayInfo?.longitude, routeSubwayInfo?.subWayInfoList]);
     
-    const SubwayRouteArriveInfo = async ( stationList : any ) => {
+    /*
+    *  호선별 도착정보 조회
+    *
+    */
+    const SubwayRouteArriveInfo = async ( stationList : any, routeName : string ) => {
+
       return await new Promise( resolve => {
 
+            AxiosCall("GET", `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimePosition/0/100/${routeName.replaceAll('0','')}`, null, function (data) {
+              const { realtimePositionList    } = data;
 
+              stationList.length > 0 && stationList.map(( stInfo : RouteSubWayInfo, index : number ) => {
+                  const { STATION_NM  } = stInfo;
+                  
+                  const  station_arrInfo = realtimePositionList.filter((v : { statnNm : string }) => v.statnNm.indexOf(STATION_NM) !== -1 )
+                                                               .map((v : { trainSttus : string,  updnLine : string} ) => (
+                                                                  { 
+                                                                    trainSttus : trainStatHandler(v.trainSttus), 
+                                                                    updnLine : upDownLineStatHandler(v.updnLine) 
+                                                                  }) 
+                                                                );
+                  stationList[index].subwayArrivalInfo = [...station_arrInfo];
+              });
+              resolve(stationList);
+            }, () => {
+                setLoading(false);
+            });
       });
     }
 
@@ -62,7 +90,6 @@ const LocationSearch = ({ route, navigation } : any) => {
             const param = {
               routeName : routeName
             }
-            setLoading(true);
             AxiosCall("GET", `${API_IP_INFO}/subway/subway-route-info`, param, function (data) {
               resolve(data);
             }, () => {
@@ -75,7 +102,7 @@ const LocationSearch = ({ route, navigation } : any) => {
         getCurrentLocation();
 
         return () => {
-          setRouteSubwayInfo({latitude: routeSubwayInfo.latitude, longitude: routeSubwayInfo.longitude, subWayInfoList : []});
+          setRouteSubwayInfo({latitude: routeSubwayInfo?.latitude, longitude: routeSubwayInfo?.longitude, subWayInfoList : []});
         }
     },[]);
    
@@ -86,7 +113,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                 </View>
                 );
     }
-
+    
     return (
       <View style={styles.container}>
              <View style={Button.timeSectionBtn}>
@@ -130,5 +157,9 @@ const styles = StyleSheet.create({
     position : 'relative'
   },
 });
+
+
+
+
 
 export default LocationSearch;

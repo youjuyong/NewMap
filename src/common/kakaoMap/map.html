@@ -33,9 +33,10 @@
       <script>
         kakao.maps.load(function() {
 
-          const STATION_MARKER = [];
-          const STATION_NAME_MARKER = [];
-          const VER_TEX        = [];
+          let STATION_MARKER = [];
+          let STATION_NAME_MARKER = [];
+          let VER_TEX        = [];
+          let TRAIN_MARKER   = [];
 
           const Markers = {
             statMarker : {
@@ -66,6 +67,20 @@
                     HEIGHT: 50
               },
               SRC:  "../../../public/images/here_img.png"
+            },
+            uplineMarker : {
+              SIZE: {
+                    WIDTH: 20,
+                    HEIGHT: 20
+              },
+              SRC:  "../../../public/images/marker_bus_blue.png"
+            },
+            downlineMarker : {
+              SIZE: {
+                    WIDTH: 20,
+                    HEIGHT: 20
+              },
+              SRC:  "../../../public/images/marker_bus_red.png"
             }
           }
           
@@ -151,7 +166,7 @@
 
              const { latitude, longitude, subWayInfoList } = JSON.parse(e.data);
               
-              if ( latitude === null ||longitude === null ) return;
+              if ( latitude === null || longitude === null ) return;
               const container = document.getElementById('map');
               const options = {
                 center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
@@ -171,10 +186,12 @@
               
               let pathArray = [];
 
-              [...subWayInfoList].map(( info ) => {
+              if ( subWayInfoList?.length === undefined ||  subWayInfoList?.length === 0 ) return;
 
-                  const { STATION_NM, X_CRDN, Y_CRDN, CHANGE_STAT_YN } = info; 
+              [...subWayInfoList].map(( subWayinfo ) => {
 
+                  const { STATION_NM, X_CRDN, Y_CRDN, CHANGE_STAT_YN, subwayArrivalInfo } = subWayinfo; 
+                 
                   const imageSize = new kakao.maps.Size(20, 20);
                   const imageOption = {offset: new kakao.maps.Point(10, 10),alt : STATION_NM};
                   const markerImage = new kakao.maps.MarkerImage(markerSrcHandler(CHANGE_STAT_YN), imageSize, imageOption);
@@ -187,18 +204,34 @@
                   });
                   
                   const customOverlay = new kakao.maps.CustomOverlay({
-                    map : container_map,
+                      map : container_map,
                       position : position,
                       content : `<div class='cunt'>${STATION_NM}</div>` ,
                       xAnchor : 0.1,
                       yAnchor : 1.8
                   });
                   
-                  // if (customOverlay) {
-                  //       customOverlay.style.position = 'relative';
-                  //       customOverlay.style.top = '-10px'; 
-                  //   }
+   
+                  if ( subwayArrivalInfo?.length > 0 ) 
+                  {
 
+                      subwayArrivalInfo.map((v) => {
+                     
+                          const trainMarkerImage = new kakao.maps.MarkerImage( v.updnLine === '하행/외선' ? Markers.downlineMarker.SRC : Markers.uplineMarker.SRC , imageSize, imageOption);
+                          
+                          const tm = new kakao.maps.Marker({
+                              position: new kakao.maps.LatLng(Y_CRDN + 0.001, X_CRDN),
+                              image: trainMarkerImage, // 마커이미지 설정 
+                              title: STATION_NM,
+                              zIndex : 999
+                          });
+
+                         tm.setMap(container_map);
+                         TRAIN_MARKER.push(tm);
+                      });
+                
+                  }
+                  
                   stat_marker.setMap(container_map);
 
                   STATION_MARKER.push(stat_marker);
