@@ -25,10 +25,64 @@
             top : 10px;
             left : -25px;
         }
+        .train_cunt {
+            background: #D5E3FF;
+            border: 1px solid #444;
+            font-size: 10px;
+            color: #000;
+            font-weight: bold;
+            height: 12px;
+            line-height: 10px;
+            text-align: center;
+            position: absolute;
+            z-index: 99999999;
+            padding: 0 2px;
+            border-radius: 5px;
+            min-width : 45px;
+            top : -38px;
+            left : -25px;
+        }
+        .dir_div {
+          position: absolute;
+          top :0;
+          left : 0;
+          right :0;
+          height : 44px;
+          z-index: 2;
+          background-color: rgba(23, 23, 23, 0.7);
+        }
+        .dir_ulTag {
+          list-style: none;
+          float :right;
+          overflow: hidden;
+          margin : 7px;
+        }
+        .dir_ulTag li {
+          float: left;
+          font-size: 11px;
+          color : #fff;
+          margin-left: 5px;
+
+          img {
+            margin-top: 0;
+            vertical-align: middle;
+            margin-right: 2px;
+          }
+        }
       </style>
     </head>
     <body>
       <div id="map">
+        <div class="dir_div">
+          <ul class="dir_ulTag">
+            <li>
+              <img src="../../../public/images/marker_bus_blue.png" alt="상행">상행
+            </li>
+            <li>
+              <img src="../../../public/images/marker_bus_red.png" alt="하행">하행
+            </li>
+          </ul>
+        </div>
       </div>
       <script>
         kakao.maps.load(function() {
@@ -37,6 +91,7 @@
           let STATION_NAME_MARKER = [];
           let VER_TEX        = [];
           let TRAIN_MARKER   = [];
+          let TRAIN_STAT_MARKER = [];
 
           const Markers = {
             statMarker : {
@@ -219,15 +274,24 @@
                      
                           const trainMarkerImage = new kakao.maps.MarkerImage( v.updnLine === '하행/외선' ? Markers.downlineMarker.SRC : Markers.uplineMarker.SRC , imageSize, imageOption);
                           
-                          const tm = new kakao.maps.Marker({
+                          const train_m = new kakao.maps.Marker({
                               position: new kakao.maps.LatLng(Y_CRDN + 0.001, X_CRDN),
                               image: trainMarkerImage, // 마커이미지 설정 
                               title: STATION_NM,
                               zIndex : 999
                           });
 
-                         tm.setMap(container_map);
-                         TRAIN_MARKER.push(tm);
+                          const trainStat_Overlay = new kakao.maps.CustomOverlay({
+                              map : container_map,
+                              position : position,
+                              content : `<div class='train_cunt'>${v.trainSttus}</div>` ,
+                              xAnchor : 0.1,
+                              yAnchor : 1.8
+                          });
+
+                         train_m.setMap(container_map);
+                         TRAIN_MARKER.push(train_m);
+                         TRAIN_STAT_MARKER.push(trainStat_Overlay);
                       });
                 
                   }
