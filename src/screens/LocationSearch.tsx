@@ -90,6 +90,7 @@ const LocationSearch = ({ route, navigation } : any) => {
             const param = {
               routeName : routeName
             }
+         
             AxiosCall("GET", `${API_IP_INFO}/subway/subway-route-info`, param, function (data) {
               resolve(data);
             }, () => {
@@ -139,7 +140,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                          <Button_Tochable_style width={'80px'} height={'50px'} onPress = {(element) => ButtonClick(value) }><Text style={Button.Btn_1_Text}>검색</Text></Button_Tochable_style>
                     </View>
             </View>
-             { ( routeSubwayInfo ) ? (
+             { ( routeSubwayInfo?.latitude ) ? (
                   <KakaoMap/>
               ) : (
                    <View style={Comm.loading}>

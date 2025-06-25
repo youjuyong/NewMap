@@ -287,7 +287,7 @@ export const Button = StyleSheet.create({
         position: "relative",
         width : 'auto',
         height : 'auto',
-        marginRight : 30,
+        marginRight : 10,
         marginLeft : 20,
         marginBottom : 10,
   },
