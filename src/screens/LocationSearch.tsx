@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } fr
 import { useState, useEffect, useCallback } from "react";
 import * as Location  from 'expo-location';
 import { Button, Comm } from "../../public/styles";
-import KakaoMap from "../component/KakaoMap";
+import NaverMap from "../../src/common/naverMap/NaverMap";
 import { Button_Tochable_style } from '../../public/styled_compo';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Section } from "../../public/styles";
@@ -141,7 +141,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                     </View>
             </View>
              { ( routeSubwayInfo?.latitude ) ? (
-                  <KakaoMap/>
+                  <NaverMap/>
               ) : (
                    <View style={Comm.loading}>
                     <ActivityIndicator size="large" />
