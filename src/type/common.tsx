@@ -89,7 +89,8 @@ export interface RouteSubWayInfo {
 export interface  locationType {
   latitude : number | undefined,
   longitude : number | undefined,
-  subWayInfoList : RouteSubWayInfo[] | any
+  subWayInfoList : RouteSubWayInfo[] | any,
+  routeName : string | null
 }
 
 export interface RouteInfoState {

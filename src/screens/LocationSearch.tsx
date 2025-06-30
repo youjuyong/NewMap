@@ -32,8 +32,7 @@ const LocationSearch = ({ route, navigation } : any) => {
       {
         try {
                 const { coords } = await Location.getCurrentPositionAsync({accuracy: 5});
-
-                setRouteSubwayInfo({latitude: coords?.latitude, longitude: coords?.longitude, subWayInfoList : []});
+                setRouteSubwayInfo({latitude: coords?.latitude, longitude: coords?.longitude, subWayInfoList : [], routeName : null });
             } catch (error) {
                 console.error('위치 정보를 가져오는 데 실패했습니다:', error)
             }
@@ -47,7 +46,7 @@ const LocationSearch = ({ route, navigation } : any) => {
           SubwayRouteList(routeName).then(( data ) => {
               return SubwayRouteArriveInfo(data, routeName);
           }).then((data) => {
-              setRouteSubwayInfo({latitude : routeSubwayInfo?.latitude,longitude : routeSubwayInfo?.longitude , subWayInfoList : data });
+              setRouteSubwayInfo({latitude : routeSubwayInfo?.latitude,longitude : routeSubwayInfo?.longitude , subWayInfoList : data, routeName : routeName });
               setLoading(false);
           }).catch((error) => {
             setLoading(false);
@@ -103,7 +102,7 @@ const LocationSearch = ({ route, navigation } : any) => {
         getCurrentLocation();
 
         return () => {
-          setRouteSubwayInfo({latitude: routeSubwayInfo?.latitude, longitude: routeSubwayInfo?.longitude, subWayInfoList : []});
+          setRouteSubwayInfo({latitude: routeSubwayInfo?.latitude, longitude: routeSubwayInfo?.longitude, subWayInfoList : [], routeName : null});
         }
     },[]);
    
