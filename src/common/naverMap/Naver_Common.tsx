@@ -3,15 +3,16 @@ import { mapInstanceType } from "../../type/naverMapType";
 import { RouteInfoState } from "../../type/common";
 import useRouteStore  from "../../common/utils/store/useRouteStore";
 import { PropsWithChildren, ReactElement } from 'react';
+import {MapMarker} from "./MapMarker";
 
 /*
 *
-* 맵 그리기
+* Map Instance
 *  
 */
-export function MapInstance ({ width, height, showMyLocBtn, latitude, longitude, zoomLevel } : PropsWithChildren<mapInstanceType> ) : ReactElement | undefined{
+export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_longitude, zoomLevel } : PropsWithChildren<mapInstanceType> ) : ReactElement | undefined{
     const { routeSubwayInfo } : RouteInfoState = useRouteStore(); 
-    const { routeName } = routeSubwayInfo;
+    const { routeName, latitude, longitude, type } = routeSubwayInfo;
 
     if ( routeName === null ) 
     {
@@ -19,30 +20,10 @@ export function MapInstance ({ width, height, showMyLocBtn, latitude, longitude,
             <NaverMapView  
                             style={{width: width, height: height}}
                             showsMyLocationButton={showMyLocBtn}
-                            center={{latitude: latitude , longitude: longitude, zoom: zoomLevel}}
+                            center={{latitude: cur_latitude , longitude: cur_longitude, zoom: zoomLevel}}
             >
-                { MarkerImg ('myLocMarker') }
+                <MapMarker coordinate={{ latitude : latitude, longitude : longitude}} type={ type }></MapMarker>
             </NaverMapView>
-        )
-    }
-}
-
-/*
-*
-* 마커 이미지 
-*  
-*/
-export function MarkerImg ( type : string ) {
-    const { routeSubwayInfo } : RouteInfoState = useRouteStore(); 
-    const { latitude, longitude } = routeSubwayInfo;
-    
-    if ( type === 'myLocMarker' ) 
-    {
-        return (
-                <Marker coordinate={{ latitude : latitude, longitude : longitude}} 
-                             image={require("../../../public/images/location.png")}
-                             width={40} 
-                            height={40}></Marker>
         )
     }
 }

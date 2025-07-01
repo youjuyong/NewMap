@@ -11,8 +11,8 @@ function NaverMap () : React.JSX.Element  {
         <MapInstance width ={'100%'} 
                   height = {'100%'}
                   showMyLocBtn = {true}
-                  latitude =  {routeSubwayInfo?.latitude}
-                  longitude = {routeSubwayInfo?.longitude}
+                  cur_latitude =  {routeSubwayInfo?.latitude}
+                  cur_longitude = {routeSubwayInfo?.longitude}
                   zoomLevel = {16}>
         </MapInstance>
       </View>

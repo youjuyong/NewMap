@@ -1,6 +1,16 @@
 import { Component, JSX } from "react";
 import { ImageSourcePropType, requireNativeComponent }  from "react-native";
 
+export type LatLng = {
+    latitude : number;
+    longitude : number;
+}
+
+export type Point = {
+    x : number;
+    y : number;
+}
+
 interface Coord {
     latitude : number;
     longitude : number;
@@ -9,8 +19,8 @@ interface Coord {
 export interface mapInstanceType {
     width : string,
     height : string
-    latitude : number, 
-    longitude : number,
+    cur_latitude : number, 
+    cur_longitude : number,
     zoomLevel : number,
     showMyLocBtn ?: boolean,
     Marker ?: Marker,
