@@ -83,8 +83,14 @@ export interface RouteSubWayInfo {
   STATION_CD : string,
   X_CRDN : string,
   Y_CRDN : string,
-  CHANGE_STAT_YN : string
+  CHANGE_STAT_YN : string,
+  subwayArrivalInfo : SubwayArrivalInfo[]
 } 
+
+export interface SubwayArrivalInfo {
+  trainSttus : string,
+  updnLine : string
+}
 
 export interface  locationType {
   latitude : number | undefined,

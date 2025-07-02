@@ -3,6 +3,7 @@ import {
     ViewProps,
     ImageURISource,
     ImageRequireSource,
+    ImageSourcePropType
 } from 'react-native';
 import {
     Point,
@@ -15,7 +16,7 @@ import {
     Commands,
     MapMarkerNativeComponentType
 } from "./MapMarkerNativeComponent";
-import { Marker } from 'react-native-nmap';
+import NaverMapView, { Marker } from 'react-native-nmap';
 
 export type MapMarkerPros = ViewProps & {
     
@@ -38,6 +39,17 @@ export type MapMarkerPros = ViewProps & {
     stopPropagation ?: boolean;
 
     type ?: string;
+
+    key ?: string;
+
+    width ?: number;
+
+    height ?: number;
+
+    imageSrc ?: ImageSourcePropType | undefined | number,
+
+    children ?: React.ReactNode
+
 }
 
 export type OmittedProps = Omit<MapMarkerPros, 'stopPropagation'>;
@@ -83,19 +95,14 @@ export class MapMarker extends React.Component<MapMarkerPros> {
 
     render () {
         const { stopPropagation = false } = this.props;
-        
-        let image;
-        
-        if ( this.props.type === 'myLocMarker' ) {
-            image = require("../../../public/images/location.png");
-        }
 
         return (
             <Marker
                 {...this.props}
                 ref={this.marker}
                 coordinate={this.props.coordinate}    
-                image={image} 
+                image={this.props.imageSrc} 
+                key={this.props.key}
             >
             </Marker>
         )

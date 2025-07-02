@@ -42,7 +42,7 @@ export async function requestFecth ( url : string ) {
 * 열차 상태 함수
 * 
 */
-export const trainStatHandler = ( trainSttus : string ) => {
+export const trainStatHandler = ( trainSttus : string ) : string => {
 
   let stat = '정보없음';
 
@@ -67,7 +67,7 @@ export const trainStatHandler = ( trainSttus : string ) => {
 * 상행/하행 상태 함수
 * 
 */
-export const upDownLineStatHandler = ( trainSttus : string ) => {
+export const upDownLineStatHandler = ( trainSttus : string ) : string => {
 
   let stat = '정보없음';
 
