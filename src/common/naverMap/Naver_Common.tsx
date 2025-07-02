@@ -1,11 +1,13 @@
-import NaverMapView, { Marker }  from 'react-native-nmap';
+import NaverMapView, { Align, Marker, Polyline }  from 'react-native-nmap';
 import { View,Text } from "react-native";
-import { mapInstanceType, getByMetroImgUrl, getByMetroImgSzie, getByTrainImgSize, getByTrainImgUrl } from "../../type/naverMapType";
+import { mapInstanceType, getByMetroImgUrl, getByMetroImgSzie, getByTrainImgSize, getByTrainImgUrl, LatLng, getByPolyLineColor } from "../../type/naverMapType";
 import { RouteInfoState, RouteSubWayInfo, SubwayArrivalInfo } from "../../type/common";
 import useRouteStore  from "../../common/utils/store/useRouteStore";
 import { PropsWithChildren, ReactElement } from 'react';
-import {MapMarker} from "./MapMarker";
-import { Markers } from "./Marker_Object";
+import { MapMarker } from "./MapMarker";
+import { Markers, routeColorSeriz } from "./Marker_Object";
+import { color } from "../../../public/var";
+import { trainStatHandler } from "../../common/common";
 
 /*
 *
@@ -28,7 +30,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
             },
             showsMyLocationButton : showMyLocBtn,
             center : {
-                    latitude : cur_latitude, 
+                    latitude  : cur_latitude, 
                     longitude : cur_longitude, 
                     zoom      : zoomLevel
             }
@@ -41,6 +43,10 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
             },
     }
 
+    let polyLine:LatLng[] = [];
+    let subwayId:string | undefined = '';
+    
+    // 호선 선택 x
     if ( routeName === null ) 
     {
         return(  
@@ -50,35 +56,42 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                 <MapMarker {...marker_options}
                              imageSrc={getByMetroImgUrl('', Markers)}
                                 width={ getByMetroImgSzie('', Markers).WIDTH } 
-                               height={ getByMetroImgSzie('', Markers).HEIGHT }></MapMarker>
+                               height={ getByMetroImgSzie('', Markers).HEIGHT }
+                               caption={{ text : '현재 위치', haloColor : color.purple100 }}
+                               ></MapMarker>
             </NaverMapView>
         )
     }
     
+    // 호선 선택 O
     if ( routeName !== null )
     {
         return(
-             <NaverMapView  
-                            {...map_options}
-            >
+             <NaverMapView {...map_options}>
                 <MapMarker {...marker_options}
                                  imageSrc={ getByMetroImgUrl('', Markers) } 
                                     width={ getByMetroImgSzie('', Markers).WIDTH } 
                                    height={ getByMetroImgSzie('', Markers).HEIGHT } 
+                                   caption={{ text : '현재 위치', haloColor : color.purple100 }}
                                 ></MapMarker>
                 {
-                    subWayInfoList.map((info : RouteSubWayInfo) => {
+                    subWayInfoList.map((info : RouteSubWayInfo, index : string) => {
+                      
+                        const { CHANGE_STAT_YN, STATION_NM, X_CRDN, Y_CRDN, SUBWAY_ID, STATION_CD } = info;
 
-                        const { CHANGE_STAT_YN, subwayArrivalInfo } = info;
+                        polyLine.push({ latitude : Number(Y_CRDN), longitude : Number(X_CRDN) });
+                        subwayId = SUBWAY_ID;
 
                         return (
                             <MapMarker coordinate={{ 
                                             latitude : Number(info.Y_CRDN), 
                                             longitude : Number(info.X_CRDN)
                                         }} 
+                                        key={ String(STATION_CD) + index }
                                         imageSrc={ getByMetroImgUrl(CHANGE_STAT_YN, Markers) }
                                            width={ getByMetroImgSzie(CHANGE_STAT_YN, Markers).WIDTH } 
                                           height={ getByMetroImgSzie(CHANGE_STAT_YN, Markers).HEIGHT } 
+                                         caption={{ text : STATION_NM, haloColor : color.blue300 }}
                             >
                             </MapMarker>
                         )
@@ -94,25 +107,25 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                               return (
                                 subwayArrivalInfo.map( (trainInfo : SubwayArrivalInfo, index : number ) => {
 
-                                const { updnLine } = trainInfo;
-                            
+                                const { updnLine, trainSttus } = trainInfo;
                                     return (
                                         <MapMarker coordinate={{ 
                                                     latitude : Number(info.Y_CRDN), 
                                                     longitude : Number(info.X_CRDN)
                                                 }} 
-                                                key={ updnLine + index }
+                                                key={ String(index) + updnLine }
                                                 imageSrc={ getByTrainImgUrl(updnLine, Markers) }
                                                 width={ getByTrainImgSize(updnLine, Markers).WIDTH } 
                                             height={ getByTrainImgSize(updnLine, Markers).HEIGHT } 
+                                            caption={{ text : trainSttus, align : Align.Top, haloColor : color.yellow400 }}
                                         ></MapMarker>
                                     )
                                 })
                             )
                         }
                     })
-                    
                 }
+                <Polyline coordinates={[...polyLine]} strokeColor={getByPolyLineColor(Number(subwayId), routeColorSeriz)} strokeWidth={3}></Polyline>
             </NaverMapView>
         )
     }

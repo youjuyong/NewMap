@@ -84,7 +84,8 @@ export interface RouteSubWayInfo {
   X_CRDN : string,
   Y_CRDN : string,
   CHANGE_STAT_YN : string,
-  subwayArrivalInfo : SubwayArrivalInfo[]
+  subwayArrivalInfo : SubwayArrivalInfo[],
+  SUBWAY_ID ?: string
 } 
 
 export interface SubwayArrivalInfo {

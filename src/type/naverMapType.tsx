@@ -1,6 +1,7 @@
 import { Component, JSX } from "react";
 import { ImageSourcePropType, requireNativeComponent }  from "react-native";
 import { RouteSubWayInfo } from "./common";
+import { Align } from "react-native-nmap";
 
 export type LatLng = {
     latitude : number;
@@ -54,6 +55,7 @@ interface MarkerProps extends MapOverlay {
         textSize?: number;
         color?: string;
         haloColor?: string;
+        placement?: string;
     };
     subCaption?: {
         text?: string;
@@ -112,6 +114,108 @@ interface MarkerOption {
         SRC:  ImageSourcePropType | undefined 
     }
 }
+
+export type RouteColorSeriz = {
+            1001 : {
+              backgroundColor : string
+            },
+
+            1002 : {
+              backgroundColor : string
+            },
+
+            1003 : {
+              backgroundColor : string
+            },
+
+            1004 : {
+              backgroundColor : string
+            },
+
+            1005 : {
+              backgroundColor : string
+            },
+
+            1006 : {
+              backgroundColor :string
+            },
+
+            1007 : {
+              backgroundColor : string
+            },
+
+            1008 : {
+              backgroundColor : string
+            },
+
+            1009 : {
+              backgroundColor : string
+            },
+
+            1092 : {
+              backgroundColor : string
+            },
+
+            1065 : {
+              backgroundColor : string
+            },
+
+            1077 : {
+              backgroundColor : string
+            },
+
+            1063 : {
+              backgroundColor : string
+            },
+
+            1075 : {
+              backgroundColor : string
+            },
+
+            1081 : {
+              backgroundColor : string
+            },
+
+            1067 : {
+              backgroundColor : string
+            },
+
+            1093 : {
+              backgroundColor : string
+            },
+
+            1032 : {
+              backgroundColor : string
+            },
+
+            9999 : {
+              backgroundColor : string
+            },
+
+            [key : number] : { backgroundColor : string }
+}
+
+export type ImgCation = {
+
+    text : string,
+
+    textSize ?: number,
+
+    color ?: string,
+
+    haloColor ?: string,
+
+    placement ?: string,
+
+    textPadding ?: number,
+
+    offset ?: number,
+
+    align ?: Align
+}
+
+export type LineCapType = 'butt' | 'round' | 'square';
+export type LineJoinType = 'miter' | 'round' | 'bavel';
 
 export declare class Marker extends Component<MarkerProps> {
     render() : JSX.Element;
@@ -203,5 +307,23 @@ export function getByTrainImgSize<T extends {  updnLine : string | undefined }>(
 
     return markerObject.downlineMarker.SIZE;
 }
+
+/*
+*
+* polyline 색
+* 
+*/
+export function getByPolyLineColor<T extends {  subwayId : string | undefined }>( 
+                subwayId : number ,
+                colorObject : RouteColorSeriz ) : string {
+                
+    if ( subwayId === undefined ) 
+    {
+         return colorObject[9999].backgroundColor;
+    }
+
+    return colorObject[subwayId].backgroundColor;
+}
+
 
 export {};

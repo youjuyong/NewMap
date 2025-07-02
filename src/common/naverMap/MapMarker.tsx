@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 import {
     Point,
-    LatLng
+    LatLng,
+    ImgCation
 } from '../../type/naverMapType';
 import {
     Modify
@@ -16,7 +17,7 @@ import {
     Commands,
     MapMarkerNativeComponentType
 } from "./MapMarkerNativeComponent";
-import NaverMapView, { Marker } from 'react-native-nmap';
+import { Marker } from 'react-native-nmap';
 
 export type MapMarkerPros = ViewProps & {
     
@@ -48,7 +49,9 @@ export type MapMarkerPros = ViewProps & {
 
     imageSrc ?: ImageSourcePropType | undefined | number,
 
-    children ?: React.ReactNode
+    children ?: React.ReactNode,
+
+    caption ?: ImgCation
 
 }
 
