@@ -1,5 +1,4 @@
 import NaverMapView, { Align, Marker, Polyline }  from 'react-native-nmap';
-import { View,Text } from "react-native";
 import { mapInstanceType, getByMetroImgUrl, getByMetroImgSzie, getByTrainImgSize, getByTrainImgUrl, LatLng, getByPolyLineColor } from "../../type/naverMapType";
 import { RouteInfoState, RouteSubWayInfo, SubwayArrivalInfo } from "../../type/common";
 import useRouteStore  from "../../common/utils/store/useRouteStore";
@@ -7,7 +6,6 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { MapMarker } from "./MapMarker";
 import { Markers, routeColorSeriz } from "./Marker_Object";
 import { color } from "../../../public/var";
-import { trainStatHandler } from "../../common/common";
 
 /*
 *
@@ -44,7 +42,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
     }
 
     let polyLine:LatLng[] = [];
-    let subwayId:string | undefined = '';
+    let subwayId:string | undefined | null= null;
     
     // 호선 선택 x
     if ( routeName === null ) 
@@ -102,7 +100,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
 
                         const { subwayArrivalInfo } = info;
 
-                        if ( subwayArrivalInfo.length > 0 ) 
+                        if ( subwayArrivalInfo?.length > 0 && subwayArrivalInfo?.length !== undefined ) 
                         {
                               return (
                                 subwayArrivalInfo.map( (trainInfo : SubwayArrivalInfo, index : number ) => {
@@ -125,7 +123,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                         }
                     })
                 }
-                <Polyline coordinates={[...polyLine]} strokeColor={getByPolyLineColor(Number(subwayId), routeColorSeriz)} strokeWidth={3}></Polyline>
+               <Polyline coordinates={[...polyLine]} strokeColor={getByPolyLineColor(Number(subwayId || 9999), routeColorSeriz)} strokeWidth={3}></Polyline>
             </NaverMapView>
         )
     }

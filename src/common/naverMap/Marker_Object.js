@@ -118,6 +118,6 @@ export const routeColorSeriz = {
             },
 
             9999 : {
-              backgroundColor : '#ddd'
+              backgroundColor : '#000'
             },
 }

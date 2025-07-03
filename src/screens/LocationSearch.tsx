@@ -62,10 +62,24 @@ const LocationSearch = ({ route, navigation } : any) => {
 
       return await new Promise( resolve => {
 
-            AxiosCall("GET", `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimePosition/0/100/${routeName.replaceAll('0','')}`, null, function (data) {
-              const { realtimePositionList    } = data;
+            AxiosCall("GET", 
+                      `http://swopenapi.seoul.go.kr/api/subway/576e49415564627733364f744f5166/json/realtimePosition/0/100/${routeName.replaceAll('0','')}`,
+                       null, 
+                      function (data) {
 
-              stationList.length > 0 && stationList.map(( stInfo : RouteSubWayInfo, index : number ) => {
+              const { realtimePositionList, 
+                                    status } = data;
+
+              // 데이터가 없을 경우
+              if ( status === 500 ) 
+              {
+                resolve(stationList);
+                return;
+              }
+              // 상태 정상
+              else if ( status === 200 ) 
+              {
+                stationList.length > 0 && stationList.map(( stInfo : RouteSubWayInfo, index : number ) => {
                   const { STATION_NM  } = stInfo;
                   
                   const  station_arrInfo = realtimePositionList.filter((v : { statnNm : string }) => v.statnNm.indexOf(STATION_NM) !== -1 )
@@ -76,8 +90,10 @@ const LocationSearch = ({ route, navigation } : any) => {
                                                                   }) 
                                                                 );
                   stationList[index].subwayArrivalInfo = [...station_arrInfo];
-              });
-              resolve(stationList);
+
+                });
+                resolve(stationList);
+              }
             }, () => {
                 setLoading(false);
             });
@@ -102,7 +118,9 @@ const LocationSearch = ({ route, navigation } : any) => {
         getCurrentLocation();
 
         return () => {
-          setRouteSubwayInfo({latitude: routeSubwayInfo?.latitude, longitude: routeSubwayInfo?.longitude, subWayInfoList : [], routeName : null});
+          setRouteSubwayInfo({latitude: routeSubwayInfo?.latitude, 
+                              longitude: routeSubwayInfo?.longitude, 
+                              subWayInfoList : [], routeName : null});
         }
     },[]);
    
