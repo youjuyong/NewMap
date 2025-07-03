@@ -77,7 +77,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                 return;
               }
               // 상태 정상
-              else if ( status === 200 ) 
+              else 
               {
                 stationList.length > 0 && stationList.map(( stInfo : RouteSubWayInfo, index : number ) => {
                   const { STATION_NM  } = stInfo;

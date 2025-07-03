@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text, Image, Alert } from "react-native"
-import { Button, TextInputCss, Comm } from "../../public/styles";
+import { Button } from "../../public/styles";
 import { useState, useEffect } from "react";
 import React from "react";
 import { FavorType } from "../type/common";
@@ -11,7 +11,6 @@ const FavorStartCp = (props : FavorType) => {
     const [favorYn, setFavorYn] = useState(false);
 
     const FavorButtonClick = () => {
-
         if ( props.userId === null ) 
         {
             Alert.alert("로그인이  필요합니다.");

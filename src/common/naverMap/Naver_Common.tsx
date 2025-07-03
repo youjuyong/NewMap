@@ -73,7 +73,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                                    caption={{ text : '현재 위치', haloColor : color.purple100 }}
                                 ></MapMarker>
                 {
-                    subWayInfoList.map((info : RouteSubWayInfo, index : string) => {
+                    subWayInfoList.map((info : RouteSubWayInfo, index : number) => {
                       
                         const { CHANGE_STAT_YN, STATION_NM, X_CRDN, Y_CRDN, SUBWAY_ID, STATION_CD } = info;
 
@@ -85,7 +85,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                                             latitude : Number(info.Y_CRDN), 
                                             longitude : Number(info.X_CRDN)
                                         }} 
-                                        key={ String(STATION_CD) + index }
+                                        index = {index}
                                         imageSrc={ getByMetroImgUrl(CHANGE_STAT_YN, Markers) }
                                            width={ getByMetroImgSzie(CHANGE_STAT_YN, Markers).WIDTH } 
                                           height={ getByMetroImgSzie(CHANGE_STAT_YN, Markers).HEIGHT } 
@@ -111,7 +111,7 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                                                     latitude : Number(info.Y_CRDN), 
                                                     longitude : Number(info.X_CRDN)
                                                 }} 
-                                                key={ String(index) + updnLine }
+                                                index = {index}
                                                 imageSrc={ getByTrainImgUrl(updnLine, Markers) }
                                                 width={ getByTrainImgSize(updnLine, Markers).WIDTH } 
                                             height={ getByTrainImgSize(updnLine, Markers).HEIGHT } 

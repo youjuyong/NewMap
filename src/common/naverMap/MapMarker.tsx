@@ -47,11 +47,13 @@ export type MapMarkerPros = ViewProps & {
 
     height ?: number;
 
-    imageSrc ?: ImageSourcePropType | undefined | number,
+    imageSrc ?: ImageSourcePropType | undefined | number;
 
-    children ?: React.ReactNode,
+    children ?: React.ReactNode;
 
-    caption ?: ImgCation
+    caption ?: ImgCation;
+
+    index ?: number;
 
 }
 
@@ -105,7 +107,7 @@ export class MapMarker extends React.Component<MapMarkerPros> {
                 ref={this.marker}
                 coordinate={this.props.coordinate}    
                 image={this.props.imageSrc} 
-                key={this.props.key}
+                key={this.props.index}
             >
             </Marker>
         )
