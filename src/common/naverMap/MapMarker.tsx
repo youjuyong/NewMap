@@ -53,8 +53,6 @@ export type MapMarkerPros = ViewProps & {
 
     caption ?: ImgCation;
 
-    index ?: number;
-
 }
 
 export type OmittedProps = Omit<MapMarkerPros, 'stopPropagation'>;
@@ -107,7 +105,6 @@ export class MapMarker extends React.Component<MapMarkerPros> {
                 ref={this.marker}
                 coordinate={this.props.coordinate}    
                 image={this.props.imageSrc} 
-                key={this.props.index}
             >
             </Marker>
         )

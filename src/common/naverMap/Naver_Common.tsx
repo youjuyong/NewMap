@@ -17,7 +17,6 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
     const { routeName, 
              latitude, 
              longitude, 
-             type, 
              subWayInfoList 
           } = routeSubwayInfo;
 
@@ -80,12 +79,14 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                         polyLine.push({ latitude : Number(Y_CRDN), longitude : Number(X_CRDN) });
                         subwayId = SUBWAY_ID;
 
+                        const key = String(info.Y_CRDN) + String(info.X_CRDN);
+
                         return (
                             <MapMarker coordinate={{ 
                                             latitude : Number(info.Y_CRDN), 
                                             longitude : Number(info.X_CRDN)
                                         }} 
-                                        index = {index}
+                                        key = {key}
                                         imageSrc={ getByMetroImgUrl(CHANGE_STAT_YN, Markers) }
                                            width={ getByMetroImgSzie(CHANGE_STAT_YN, Markers).WIDTH } 
                                           height={ getByMetroImgSzie(CHANGE_STAT_YN, Markers).HEIGHT } 
@@ -106,12 +107,15 @@ export function MapInstance ({ width, height, showMyLocBtn, cur_latitude, cur_lo
                                 subwayArrivalInfo.map( (trainInfo : SubwayArrivalInfo, index : number ) => {
 
                                 const { updnLine, trainSttus } = trainInfo;
+                                
+                                const key = String(info.X_CRDN) + String(info.Y_CRDN) + updnLine + trainSttus + String(index);
+
                                     return (
                                         <MapMarker coordinate={{ 
                                                     latitude : Number(info.Y_CRDN), 
                                                     longitude : Number(info.X_CRDN)
                                                 }} 
-                                                index = {index}
+                                                key = {key}
                                                 imageSrc={ getByTrainImgUrl(updnLine, Markers) }
                                                 width={ getByTrainImgSize(updnLine, Markers).WIDTH } 
                                             height={ getByTrainImgSize(updnLine, Markers).HEIGHT } 

@@ -781,7 +781,6 @@ export const Header_Div = StyleSheet.create({
       width : '100%',
       minHeight : 90,
       marginBottom : 0,
-      borderWidth : 3,
       position : 'relative',
        flexDirection : 'row',
     display : "flex",
@@ -789,13 +788,28 @@ export const Header_Div = StyleSheet.create({
   },
 
   HeaderInner : {
-    borderWidth : 1,
     width : '25%',
-    borderColor : color.white100
+    borderColor : color.white100,
+    padding : 15,
+    paddingLeft : 20
   },
 
   HeaderText : {
+    marginLeft : 8,
+    marginTop : 5,
     color : color.white200
+  },
+
+  HeaderLoginText : {
+     marginLeft : 2,
+    marginTop : 5,
+    color : color.white200
+  },
+
+  HeaderImage : {
+    width : 40,
+    height : 40,
+    fontFamily: 'PretendardVariable'
   }
 });
 

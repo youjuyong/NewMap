@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, ScrollView } from "react-native";
 import { useState, useEffect, useCallback } from "react";
 import * as Location  from 'expo-location';
 import { Button, Comm } from "../../public/styles";
@@ -138,6 +138,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                     <View style={Section.timeBtnInnerDiv}>
                          <Text style={Section.timeDayWeekText}>노선명 : </Text>
                          <DropDownPicker
+                         dropDownDirection="BOTTOM"
                             open={open}
                             maxHeight={500}
                             value={value}
@@ -153,6 +154,7 @@ const LocationSearch = ({ route, navigation } : any) => {
                             listItemLabelStyle={{
                               color: "#00355A"
                             }}
+                            listMode="MODAL"
                         />
                          <Button_Tochable_style width={'80px'} height={'50px'} onPress = {(element) => ButtonClick(value) }><Text style={Button.Btn_1_Text}>검색</Text></Button_Tochable_style>
                     </View>
@@ -174,6 +176,9 @@ const styles = StyleSheet.create({
     height : 100,
     position : 'relative'
   },
+  scroll_container : {
+    flex: 1,
+  }
 });
 
 
