@@ -9,9 +9,8 @@ import { Section } from "../../public/styles";
 import { Subway_Object } from "../common/object";
 import { API_IP_INFO } from "../common/apiUrl";
 import { AxiosCall, trainStatHandler, upDownLineStatHandler } from "../common/common";
-import { RouteSubWayInfo } from "../type/common";
+import { RouteSubWayInfo, SubwayArrivalInfo, RouteInfoState } from "../type/common";
 import useRouteStore  from "../common/utils/store/useRouteStore";
-import { RouteInfoState } from "../type/common";
 
 const LocationSearch = ({ route, navigation } : any) => {
   
@@ -83,10 +82,12 @@ const LocationSearch = ({ route, navigation } : any) => {
                   const { STATION_NM  } = stInfo;
                   
                   const  station_arrInfo = realtimePositionList.filter((v : { statnNm : string }) => v.statnNm.indexOf(STATION_NM) !== -1 )
-                                                               .map((v : { trainSttus : string,  updnLine : string} ) => (
+                                                               .map((v : SubwayArrivalInfo ) => (
                                                                   { 
                                                                     trainSttus : trainStatHandler(v.trainSttus), 
-                                                                    updnLine : upDownLineStatHandler(v.updnLine) 
+                                                                    updnLine : upDownLineStatHandler(v.updnLine) ,
+                                                                    statnTnm : v.statnTnm,
+                                                                    statnId  : v.statnId
                                                                   }) 
                                                                 );
                   stationList[index].subwayArrivalInfo = [...station_arrInfo];

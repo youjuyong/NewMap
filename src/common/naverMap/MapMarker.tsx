@@ -53,6 +53,8 @@ export type MapMarkerPros = ViewProps & {
 
     caption ?: ImgCation;
 
+    id ?: string | undefined;
+
 }
 
 export type OmittedProps = Omit<MapMarkerPros, 'stopPropagation'>;
@@ -75,10 +77,10 @@ export class MapMarker extends React.Component<MapMarkerPros> {
        this.showCallout = this.showCallout.bind(this)
        this.hideCallout = this.showCallout.bind(this)
        this.redraw = this.showCallout.bind(this)
+       this.onClick = this.onClick.bind(this)
     }
 
     showCallout() {
-
         if ( this!.marker!.current ) {
             Commands.showCallout(this.marker.current);
         }
@@ -96,6 +98,12 @@ export class MapMarker extends React.Component<MapMarkerPros> {
         }
     }
 
+    onClick( id  : string | undefined, coordinate : LatLng ) {
+        if (this.marker.current) {
+           Commands.onClick(this.marker.current);
+        }
+    }
+
     render () {
         const { stopPropagation = false } = this.props;
 
@@ -105,6 +113,9 @@ export class MapMarker extends React.Component<MapMarkerPros> {
                 ref={this.marker}
                 coordinate={this.props.coordinate}    
                 image={this.props.imageSrc} 
+                onClick={() => {
+                    this.onClick(this.props.id, this.props.coordinate);
+                }}
             >
             </Marker>
         )

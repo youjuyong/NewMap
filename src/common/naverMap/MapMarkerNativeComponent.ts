@@ -20,12 +20,18 @@ interface NativeCommands {
             React.RefObject<MapMarkerNativeComponentType | Marker>['current']
         >,
     ) => void;
+    onClick : (
+          viewRef : NonNullable<
+            React.RefObject<MapMarkerNativeComponentType | Marker>['current']
+        >,
+    ) => void;
 }
 
 export const Commands : NativeCommands = codegenNativeCommands<NativeCommands>({
     supportedCommands : [
         'showCallout',
         'hideCallout',
-        'redraw'
+        'redraw',
+        'onClick'
     ]
 });

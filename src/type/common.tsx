@@ -90,7 +90,9 @@ export interface RouteSubWayInfo {
 
 export interface SubwayArrivalInfo {
   trainSttus : string,
-  updnLine : string
+  updnLine : string,
+  statnTnm : string,
+  statnId  : string
 }
 
 export interface  locationType {
